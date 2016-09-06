@@ -404,7 +404,32 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
         <div id="header">
             <div class="toc2" id="toc">
                 <div id="toctitle">Table of Contents</div>
-                
+                <ul class="sectlevel1">
+<li><a href="#tl-dr">tl;dr</a></li>
+<li><a href="#refresher-course">Refresher Course</a></li>
+<li><a href="#getting-started">Getting Started</a>
+<ul class="sectlevel2">
+<li><a href="#makefile">Makefile</a></li>
+<li><a href="#speller-c">speller.c</a></li>
+<li><a href="#questions-txt">questions.txt</a></li>
+<li><a href="#texts">texts</a></li>
+</ul>
+</li>
+<li><a href="#spell-checking">Spell Checking</a>
+<ul class="sectlevel2">
+<li><a href="#load">load</a></li>
+<li><a href="#check">check</a></li>
+<li><a href="#size">size</a></li>
+<li><a href="#unload">unload</a></li>
+</ul>
+</li>
+<li><a href="#checking-spell-checking">Checking Spell Checking</a>
+<ul class="sectlevel2">
+<li><a href="#questions-txt-2">questions.txt</a></li>
+</ul>
+</li>
+<li><a href="#how-to-submit">How to Submit</a></li>
+</ul>
             </div>
         </div>
         <div id="content">
@@ -475,7 +500,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">cd ~/workspace</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> ~/workspace</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -523,7 +548,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">cd pset5</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd </span>pset5</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -570,7 +595,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">CC = clang</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">CC</span> <span class="tok-o">=</span> clang</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -578,7 +603,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">CFLAGS = -ggdb3 -O0 -Qunused-arguments -std=c11 -Wall -Werror</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">CFLAGS</span> <span class="tok-o">=</span> -ggdb3 -O0 -Qunused-arguments -std<span class="tok-o">=</span>c11 -Wall -Werror</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -586,7 +611,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">EXE = speller</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">EXE</span> <span class="tok-o">=</span> speller</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -594,7 +619,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">HDRS = dictionary.h</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">HDRS</span> <span class="tok-o">=</span> dictionary.h</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -602,7 +627,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">LIBS =</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">LIBS</span> <span class="tok-o">=</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -610,7 +635,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">SRCS = speller.c dictionary.c</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">SRCS</span> <span class="tok-o">=</span> speller.c dictionary.c</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -618,7 +643,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">OBJS = $(SRCS:.c=.o)</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">OBJS</span> <span class="tok-o">=</span> <span class="tok-k">$(</span>SRCS:.c<span class="tok-o">=</span>.o<span class="tok-k">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -626,8 +651,8 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">$(EXE): $(OBJS) Makefile
-    $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-k">$(</span>EXE<span class="tok-k">)</span>: <span class="tok-k">$(</span>OBJS<span class="tok-k">)</span> Makefile
+    <span class="tok-k">$(</span>CC<span class="tok-k">)</span> <span class="tok-k">$(</span>CFLAGS<span class="tok-k">)</span> -o <span class="tok-nv">$@</span> <span class="tok-k">$(</span>OBJS<span class="tok-k">)</span> <span class="tok-k">$(</span>LIBS<span class="tok-k">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -635,7 +660,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">$(OBJS): $(HDRS) Makefile</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-k">$(</span>OBJS<span class="tok-k">)</span>: <span class="tok-k">$(</span>HDRS<span class="tok-k">)</span> Makefile</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -644,7 +669,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash">clean:
-    rm -f core $(EXE) *.o</code></pre>
+    rm -f core <span class="tok-k">$(</span>EXE<span class="tok-k">)</span> *.o</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -693,7 +718,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">Usage: speller [dictionary] text</code></pre>
+<pre class="pygments highlight"><code data-lang="bash">Usage: speller <span class="tok-o">[</span>dictionary<span class="tok-o">]</span> text</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -793,15 +818,15 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash">MISSPELLED WORDS
 
-[...]
+<span class="tok-o">[</span>...<span class="tok-o">]</span>
 Bigglesworth
-[...]
+<span class="tok-o">[</span>...<span class="tok-o">]</span>
 Virtucon
-[...]
-friggin'
-[...]
+<span class="tok-o">[</span>...<span class="tok-o">]</span>
+friggin<span class="tok-err">&#39;</span>
+<span class="tok-o">[</span>...<span class="tok-o">]</span>
 trippy
-[...]
+<span class="tok-o">[</span>...<span class="tok-o">]</span>
 
 WORDS MISSPELLED:
 WORDS IN DICTIONARY:
@@ -939,7 +964,7 @@ TIME IN TOTAL:</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">valgrind --leak-check=full ./speller texts/austinpowers.txt</code></pre>
+<pre class="pygments highlight"><code data-lang="bash">valgrind --leak-check<span class="tok-o">=</span>full ./speller texts/austinpowers.txt</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1007,9 +1032,9 @@ TIME IN TOTAL:</code></pre>
 
 FOTTAGE                                                         FOTTAGE
 INT                                                             INT
-                                                              &gt; EVIL'S
-s                                                               s
-                                                              &gt; EVIL'S
+                                                              &gt; EVIL<span class="tok-s1">&#39;S</span>
+<span class="tok-s1">s                                                               s</span>
+<span class="tok-s1">                                                              &gt; EVIL&#39;</span>S
 Farbissina                                                      Farbissina</code></pre>
 </div>
 </div>

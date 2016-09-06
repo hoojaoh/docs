@@ -404,7 +404,33 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
         <div id="header">
             <div class="toc2" id="toc">
                 <div id="toctitle">Table of Contents</div>
-                
+                <ul class="sectlevel1">
+<li><a href="#tl-dr">tl;dr</a></li>
+<li><a href="#help">Help</a></li>
+<li><a href="#getting-started">Getting Started</a>
+<ul class="sectlevel2">
+<li><a href="#logging-in">Logging In</a></li>
+<li><a href="#updating">Updating</a></li>
+<li><a href="#hello">Hello</a></li>
+</ul>
+</li>
+<li><a href="#hello-c">Hello, C</a></li>
+<li><a href="#cs50-check">CS50 Check</a></li>
+<li><a href="#smart-water">Smart Water</a></li>
+<li><a href="#itsa-mario">Itsa Mario</a>
+<ul class="sectlevel2">
+<li><a href="#less-comfortable">Less Comfortable</a></li>
+<li><a href="#more-comfortable">More Comfortable</a></li>
+</ul>
+</li>
+<li><a href="#fun-with-algorithms">Fun with Algorithms</a>
+<ul class="sectlevel2">
+<li><a href="#less-comfortable-2">Less Comfortable</a></li>
+<li><a href="#more-comfortable-2">More Comfortable</a></li>
+</ul>
+</li>
+<li><a href="#how-to-submit">How to Submit</a></li>
+</ul>
             </div>
         </div>
         <div id="content">
@@ -631,12 +657,12 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="c">#include &lt;stdio.h&gt;
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include &lt;stdio.h&gt;</span>
 
-int main(void)
-{
-    printf("Hello, world!\n");
-}</code></pre>
+<span class="tok-kt">int</span> <span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-p">)</span>
+<span class="tok-p">{</span>
+    <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;Hello, world!</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">);</span>
+<span class="tok-p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1080,8 +1106,8 @@ Height: <span class="underline">4</span>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="c">float f = 0.1;
-printf("%.55f\n", f);</code></pre>
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-kt">float</span> <span class="tok-n">f</span> <span class="tok-o">=</span> <span class="tok-mf">0.1</span><span class="tok-p">;</span>
+<span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;%.55f</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">,</span> <span class="tok-n">f</span><span class="tok-p">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1208,7 +1234,7 @@ Retry: <span class="underline">0.41</span>
 </div>
 </li>
 <li>
-<p>Yup, the last digit in that sum (60) is a 0, so Daven&#8217;s card is legit!</p>
+<p>Yup, the last digit in that sum (60) is a 0, so my card is legit!</p>
 </li>
 </ol>
 </div>
