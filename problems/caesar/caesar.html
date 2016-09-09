@@ -436,6 +436,10 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
                 margin-bottom: 1.25em;
             }
 
+            table {
+                width: 100%;
+            }
+
         </style>
         <title>Caesar</title>
     </head>
@@ -446,6 +450,12 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
                 <ul class="sectlevel1">
 <li><a href="#tl-dr">tl;dr</a></li>
 <li><a href="#background">Background</a></li>
+<li><a href="#what-to-do">What To Do</a></li>
+<li><a href="#pseudocode">Pseudocode</a></li>
+<li><a href="#starter-code">Starter Code</a></li>
+<li><a href="#how-to-begin">How To Begin</a></li>
+<li><a href="#walkthrough">Walkthrough</a></li>
+<li><a href="#faqs">FAQs</a></li>
 <li><a href="#changelog">CHANGELOG</a></li>
 </ul>
             </div>
@@ -455,21 +465,15 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <div class="sect1">
 <h2 id="tl-dr"><a class="link" href="#tl-dr">tl;dr</a></h2>
 <div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>TODO</p>
-</li>
-<li>
-<p>TODO</p>
-</li>
-<li>
-<p>TODO</p>
-</li>
-<li>
-<p>TODO</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>Implement a program that encrypts messages using Caesar&#8217;s cipher, per the below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">$ </span>./caesar 1
+plaintext:  HELLO
+ciphertext: IFMMP</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -477,49 +481,64 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <h2 id="background"><a class="link" href="#background">Background</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://en.wikipedia.org/wiki/Caesar_cipher#History_and_usage">According to Suetonius</a>, <a href="https://en.wikipedia.org/wiki/Julius_Caesar">Julius Caesar</a> would <a href="http://www.merriam-webster.com/dictionary/encrypt">encrypt</a> (i.e., conceal in a reversible way) confidential messages using a <a href="https://en.wikipedia.org/wiki/Substitution_cipher">substitution cipher</a>, whereby he&#8217;d write A as D, B as E, C as F, and so forth, wrapping around from Z to C, thereby "shifting" every letter of the alphabet forward by three places. Upon receiving such messages from Caesar, recipients would have to "decrypt" them, shifting every letter backward three places, in order to read them. The secrecy of this "cryptosystem" relied on only Caesar and the recipient knowing that every letter was shifted by three places. Not particularly secure by modern standards, but, hey, if you&#8217;re perhaps the first in the world to do it, pretty secure!</p>
+<p>Supposedly, Caesar (yes, that Caesar) used to "encrypt" (i.e., conceal in a reversible way) confidential messages by shifting each letter therein by some number of places. For instance, he might write A as B, B as C, C as D, &#8230;&#8203;, and, wrapping around alphabetically, Z as A. Upon receiving such messages from Caesar, recipients would have to "decrypt" them by shifting letters in the opposite direction by the same number of places. For instance, to say HELLO to someone, Caesar might write IFMMP.</p>
 </div>
 <div class="paragraph">
-<p>Put another way, Caesar&#8217;s algorithm (i.e., cipher) encrypts messages by "rotating" each letter by <em>k</em> positions. More formally, if <em>p</em> is some plaintext (i.e., an unencrypted message), <em>p<sub>i</sub></em> is the <em>i<sup>th</sup></em> character in <em>p</em>, and <em>k</em> is a secret key (i.e., a non-negative integer), then each letter, <em>c<sub>i</sub></em>, in the ciphertext, <em>c</em>, is computed as</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\$c_i = (p_i + k) % 26\$
-</div>
+<p>The secrecy of this "cryptosystem" relied on only Caesar and the recipients knowing a secret, the number of places by which Caesar had shifted his letters (e.g., 1). Not particularly secure by modern standards, but, hey, if you&#8217;re perhaps the first in the world to do it, pretty secure!</p>
 </div>
 <div class="paragraph">
-<p>wherein % 26 (pronounced "modulo 26") means "remainder when dividing by 26." This formula perhaps makes the cipher seem more complicated than it is, but it&#8217;s really just a nice way of expressing the algorithm precisely and concisely. And computer scientists love precision and, er, concision.</p>
+<p>Unencrypted text is generally called <em>plaintext</em>. Encrypted text is generally called <em>ciphertext</em>. And the secret used is called a <em>key</em>.</p>
 </div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Encrypting HELLO with a key of 1 yields IFMMP.</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>plaintext</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">E</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>+ key</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>= ciphertext</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">F</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="what-to-do"><a class="link" href="#what-to-do">What To Do</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Prefer an example? Okay, sure. For the sake of discussion, think of A as 0, B as 1, and Z as 25. Suppose that Caesar wants to say HI to someone secretly using his usual key, <em>k</em>, of 3. And so <em>p</em> is HI, in which case <em>p<sub>0</sub></em> is H (aka 7) and <em>p<sub>1</sub></em> is I (aka 8). Meanwhile,</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\$c_0 = (p_0 + k) % 26 = (H + 3) % 26 = (7 + 3) % 26 = 10 % 26 = 10 = K\$
-</div>
-</div>
-<div class="paragraph">
-<p>since the remainder when dividing 10 by 26 is 10 (aka K) and</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\$c_1 = (p_1 + k) % 26 = (I + 3) % 26 = (8 + 3) % 26 = 11 % 26 = 10 = L\$
-</div>
-</div>
-<div class="paragraph">
-<p>since the remainder when dividing 11 by 26 is 11 (aka L).</p>
-</div>
-<div class="paragraph">
-<p>And so Caesar would send KL instead of HI.</p>
-</div>
-<div class="paragraph">
-<p>Incidentally, a Caesar cipher with a key of 13 is generally called ROT13 (cf. <a href="http://en.wikipedia.org/wiki/ROT13" class="bare">http://en.wikipedia.org/wiki/ROT13</a>). Don&#8217;t use <a href="http://www.urbandictionary.com/define.php?term=ROT26">ROT26</a>.</p>
-</div>
-<div class="paragraph">
-<p>Anyhow, your next goal is to write, in <code>caesar.c</code>, a program that encrypts messages using Caesar&#8217;s cipher.</p>
+<p>Design and implement a program, <code>caesar</code>, that encrypts messages using Caesar&#8217;s cipher.</p>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p>Implement your program in a file called <code>caesar.c</code>.</p>
+</li>
 <li>
 <p>Your program must accept a single command-line argument, a non-negative integer. Let&#8217;s call it <em>k</em> for the sake of discussion.</p>
 </li>
@@ -527,10 +546,16 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <p>If your program is executed without any command-line arguments or with more than one command-line argument, your program should print an error message (of your choice) and return (from <code>main</code>) a value of <code>1</code> (which tends to signify an error) immediately.</p>
 </li>
 <li>
-<p>You can assume that the command-line argument that the user provides will be entirely numeric (e.g., <code>13</code> and not <code>foo</code>).</p>
+<p>You can assume that, if a user does provide a command-line argument, it will be entirely numeric (e.g., <code>1</code>). No need to check that it&#8217;s indeed numeric.</p>
 </li>
 <li>
-<p>Otherwise, your program must proceed to prompt the user for a string of plaintext and then output that text with each alphabetical character "rotated" by <em>k</em> positions; non-alphabetical characters should be outputted unchanged.</p>
+<p>Do not assume that <em>k</em> will be less than or equal to 26. Your program should work for all non-negative integral values of <em>k</em> less than 2<sup>31</sup> - 26. In other words, you don&#8217;t need to worry if your program eventually breaks if the user chooses a value for <em>k</em> that&#8217;s too big or almost too big to fit in an <code>int</code>. (Recall that an <code>int</code> can overflow.) But, even if <em>k</em> is greater than 26, alphabetical characters in your program&#8217;s input should remain alphabetical characters in your program&#8217;s output. For instance, if <em>k</em> is 27, <code>A</code> should not become <code>[</code> even though <code>[</code> is 27 positions away from <code>A</code> in ASCII, per <a href="http://www.asciichart.com/">asciichart.com</a>; <code>A</code> should become <code>B</code>, since <code>B</code> is 27 positions away from <code>A</code>, provided you wrap around from <code>Z</code> to <code>A</code>.</p>
+</li>
+<li>
+<p>Your program must output <code>plaintext:  ` (without a newline) and then prompt the user for a `string</code> of plaintext (using <code>get_string</code>).</p>
+</li>
+<li>
+<p>Your program must output `ciphertext: ` (without a newline) followed by the plaintext&#8217;s corresponding ciphertext, with each alphabetical character in the plaintext "rotated" by <em>k</em> positions; non-alphabetical characters should be outputted unchanged.</p>
 </li>
 <li>
 <p>Your program must preserve case: capitalized letters, though rotated, must remain capitalized letters; lowercase letters, though rotated, must remain lowercase letters.</p>
@@ -540,14 +565,46 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pseudocode"><a class="link" href="#pseudocode">Pseudocode</a></h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="text">if user didn&#39;t run program with exactly one command-line argument
+    exit
+prompt user for plaintext
+for each character in plaintext
+    if character is alphabetical
+        rotate character by _k_ places
+        output rotated character
+    else
+        output character unchanged</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="starter-code"><a class="link" href="#starter-code">Starter Code</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Recall that, if you don&#8217;t explicitly return an <code>int</code> from within <code>main</code>, <code>0</code> is actually returned for you automatically. (Indeed, per its "return type," <code>main</code> does need to return an <code>int</code>.) Now that you&#8217;re returning <code>1</code> explicitly to signify errors, it&#8217;s best to return <code>0</code> (by convention) explicitly to signify success. Whereas <code>0</code> generally represents success, any non-<code>0</code> <code>int</code> generally represents an error. That way, you can represent (gasp) upwards of four billion errors (since an <code>int</code> is generally 32 bits)!</p>
+<p>#include &lt;cs50.h&gt;
+#include &lt;stdio.h&gt;</p>
 </div>
 <div class="paragraph">
-<p>Anyhow, even though there exist only 26 letters in the English alphabet, you may not assume that <em>k</em> will be less than or equal to 26; your program should work for all non-negative integral values of <em>k</em> less than 2<sup>31</sup> - 26. In other words, you don&#8217;t need to worry if your program eventually breaks if the user chooses a value for <em>k</em> that&#8217;s too big or almost too big to fit in an <code>int</code>. (Recall that an <code>int</code> can overflow.) But, even if <em>k</em> is greater than 26, alphabetical characters in your program&#8217;s input should remain alphabetical characters in your program&#8217;s output. For instance, if <em>k</em> is 27, <code>A</code> should not become <code>[</code> even though <code>[</code> is 27 positions away from <code>A</code> in ASCII, per <a href="http://www.asciichart.com/">asciichart.com</a>; <code>A</code> should become <code>B</code>, since "27 modulo 26" is 1, as a computer scientists might say. In other words, values like <em>k</em> = 1 and <em>k</em> = 27 are effectively equivalent. Put more simply, be sure to wrap around from <code>Z</code> to <code>A</code> (and from <code>z</code> to <code>a</code>).</p>
+<p>int main(int argc, string argv[])
+{
+    // TODO
+}</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-to-begin"><a class="link" href="#how-to-begin">How To Begin</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Where to begin?  Well, this program needs to accept a command-line argument, <em>k</em>, so this time you&#8217;ll want to declare <code>main</code> with:</p>
+<p>This program needs to accept a command-line argument, <em>k</em>, so you&#8217;ll want to declare <code>main</code> with:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -631,13 +688,23 @@ Or fher gb qevax lbhe Binygvar!</code></pre>
 <pre class="pygments highlight"><code data-lang="bash">~cs50/pset2/caesar</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Here&#8217;s Zamyla if you&#8217;d like a walkthrough as well:</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="walkthrough"><a class="link" href="#walkthrough">Walkthrough</a></h2>
+<div class="sectionbody">
 <div class="videoblock">
 <div class="content">
 <iframe width="960" height="540" src="https://www.youtube.com/embed/TODO?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="faqs"><a class="link" href="#faqs">FAQs</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>None so far! Reload this page periodically to check if any arise!</em></p>
 </div>
 </div>
 </div>
