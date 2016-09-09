@@ -4,6 +4,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
         <script crossorigin="anonymous" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
         <script type="text/x-mathjax-config">
             MathJax.Hub.Config({
@@ -22,9 +23,6 @@
         <script>
 
             $(function() {
-
-                // look for unprocessed mathematics on the page and typeset it
-                MathJax.Hub.TypeSet();
 
                 // add start=0 to ordered lists
                 $('ol').each(function() {
@@ -451,7 +449,6 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#tl-dr">tl;dr</a></li>
 <li><a href="#background">Background</a></li>
 <li><a href="#what-to-do">What To Do</a></li>
-<li><a href="#pseudocode">Pseudocode</a></li>
 <li><a href="#walkthrough">Walkthrough</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#testing">Testing</a></li>
@@ -472,8 +469,8 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">$ </span>./caesar 1
-plaintext:  HELLO
+<pre class="pygments highlight"><code>$ <span class="underline">./caesar 1</span>
+plaintext:  <span class="underline">HELLO</span>
 ciphertext: IFMMP</code></pre>
 </div>
 </div>
@@ -548,16 +545,16 @@ ciphertext: IFMMP</code></pre>
 <p>If your program is executed without any command-line arguments or with more than one command-line argument, your program should print an error message of your choice (with <code>printf</code>) and return from <code>main</code> a value of <code>1</code> (which tends to signify an error) immediately.</p>
 </li>
 <li>
-<p>You can assume that, if a user does provide a command-line argument, it will be entirely numeric (e.g., <code>1</code>). No need to check that it&#8217;s indeed numeric.</p>
+<p>You can assume that, if a user does provide a command-line argument, it will be a non-negative integer (e.g., <code>1</code>). No need to check that it&#8217;s indeed numeric.</p>
 </li>
 <li>
 <p>Do not assume that <em>k</em> will be less than or equal to 26. Your program should work for all non-negative integral values of <em>k</em> less than 2<sup>31</sup> - 26. In other words, you don&#8217;t need to worry if your program eventually breaks if the user chooses a value for <em>k</em> that&#8217;s too big or almost too big to fit in an <code>int</code>. (Recall that an <code>int</code> can overflow.) But, even if <em>k</em> is greater than 26, alphabetical characters in your program&#8217;s input should remain alphabetical characters in your program&#8217;s output. For instance, if <em>k</em> is 27, <code>A</code> should not become <code>[</code> even though <code>[</code> is 27 positions away from <code>A</code> in ASCII, per <a href="http://www.asciichart.com/">asciichart.com</a>; <code>A</code> should become <code>B</code>, since <code>B</code> is 27 positions away from <code>A</code>, provided you wrap around from <code>Z</code> to <code>A</code>.</p>
 </li>
 <li>
-<p>Your program must output <code>plaintext:  ` (without a newline) and then prompt the user for a `string</code> of plaintext (using <code>get_string</code>).</p>
+<p>Your program must output <code>plaintext:</code> (without a newline) and then prompt the user for a <code>string</code> of plaintext (using <code>get_string</code>).</p>
 </li>
 <li>
-<p>Your program must output `ciphertext: ` (without a newline) followed by the plaintext&#8217;s corresponding ciphertext, with each alphabetical character in the plaintext "rotated" by <em>k</em> positions; non-alphabetical characters should be outputted unchanged.</p>
+<p>Your program must output <code>ciphertext:</code> (without a newline) followed by the plaintext&#8217;s corresponding ciphertext, with each alphabetical character in the plaintext "rotated" by <em>k</em> positions; non-alphabetical characters should be outputted unchanged.</p>
 </li>
 <li>
 <p>Your program must preserve case: capitalized letters, though rotated, must remain capitalized letters; lowercase letters, though rotated, must remain lowercase letters.</p>
@@ -566,23 +563,6 @@ ciphertext: IFMMP</code></pre>
 <p>After outputting ciphertext, your program should exit by returning <code>0</code> from <code>main</code>.</p>
 </li>
 </ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="pseudocode"><a class="link" href="#pseudocode">Pseudocode</a></h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="linenums">if user didn't run program with exactly one command-line argument
-    exit
-prompt user for plaintext
-for each character in plaintext
-    if character is alphabetical
-        output character rotated by <em>k</em> places
-    else
-        output character unchanged</code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -600,7 +580,7 @@ for each character in plaintext
 <h2 id="usage"><a class="link" href="#usage">Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Here are some (non-exhaustive) samples of how a user might (try to) use your program. Assumed that the underlined text is what some user has typed.</p>
+<p>Your program should behave per the examples below. Assumed that the underlined text is what some user has typed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
