@@ -409,6 +409,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#debugging">Debugging</a></li>
 <li><a href="#things-to-know">Things to Know</a></li>
 <li><a href="#cryptography">Cryptography</a></li>
+<li><a href="#command-line-arguments">Command-Line Arguments</a></li>
 </ul>
             </div>
         </div>
@@ -1369,6 +1370,195 @@ Z is 90</code></pre>
 </li>
 <li>
 <p>And <a href="https://reference.cs50.net" class="bare">https://reference.cs50.net</a> has lots of useful information too, about functions that come with C.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="command-line-arguments"><a class="link" href="#command-line-arguments">Command-Line Arguments</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Let&#8217;s use what we&#8217;ve learned to dig deeper into command-line arguments.</p>
+</li>
+<li>
+<p>So far, we&#8217;ve used <code>int main(void)</code> to start our programs. The <code>void</code> keyword in particular is indicating that our program takes no arguments.</p>
+</li>
+<li>
+<p>But what if we want to write programs that take input from the command line, or words after the program name when we run it in the terminal? For example, we might run <code>make hello</code> or <code>make cough0</code>, and the second word there is an argument to our program <code>hello</code>.</p>
+</li>
+<li>
+<p>It turns out, we can start our program with this: <code>int main(int argc, string argv[])</code> and it will receive those command-line arguments.</p>
+</li>
+<li>
+<p>Now our program will receive two arguments. The first is an integer named <code>argc</code>, as in argument count, that tells us how many arguments we got. The second is an array, or list, of strings, called <code>argv</code>, as in argument vector. This list of strings can be accessed with the same syntax as we do for characters in a string (since a string is just an array of characters), like <code>argv[0]</code>.</p>
+</li>
+<li>
+<p>Let&#8217;s see this in action:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include &lt;cs50.h&gt;</span>
+<span class="tok-cp">#include &lt;stdio.h&gt;</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">argc</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">argv</span><span class="tok-p">[])</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">argc</span> <span class="tok-o">==</span> <span class="tok-mi">2</span><span class="tok-p">)</span>
+    <span class="tok-p">{</span>
+        <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;hello, %s</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">,</span> <span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]);</span>
+    <span class="tok-p">}</span>
+    <span class="tok-k">else</span>
+    <span class="tok-p">{</span>
+        <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;hello, world</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">);</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This program, when we run it, will return something like the following if we give it a command-line argument:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>~/workspace/ $ ./argv0 hello
+hello, hello</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We used <code>argv[1]</code> because <code>argv[0]</code> is always the name of the program itself.</p>
+</li>
+<li>
+<p>When we run just <code>./argv0</code>, <code>argc</code> passed to our program will be <code>1</code>, so it will just say <code>hello, world</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Let&#8217;s do this, to see how we can iterate over an array:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include &lt;cs50.h&gt;</span>
+<span class="tok-cp">#include &lt;stdio.h&gt;</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">argc</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">argv</span><span class="tok-p">[])</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">for</span> <span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span><span class="tok-p">;</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-n">argc</span><span class="tok-p">;</span> <span class="tok-n">i</span><span class="tok-o">++</span><span class="tok-p">)</span>
+    <span class="tok-p">{</span>
+        <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;%s</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">,</span> <span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]);</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This program prints out each argument, or each string in <code>argv</code>, as it goes through the indexes from <code>0</code> to <code>argc</code>, which tells us how many strings are in <code>argv</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>We can be even cooler. Since we know <code>argv</code> is an array of strings and each string is an array of characters, we can directly access characters from <code>argv</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include &lt;cs50.h&gt;</span>
+<span class="tok-cp">#include &lt;stdio.h&gt;</span>
+<span class="tok-cp">#include &lt;string.h&gt;</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">argc</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">argv</span><span class="tok-p">[])</span>
+<span class="tok-p">{</span>
+    <span class="tok-c1">// iterate over strings in argv</span>
+    <span class="tok-k">for</span> <span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span><span class="tok-p">;</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-n">argc</span><span class="tok-p">;</span> <span class="tok-n">i</span><span class="tok-o">++</span><span class="tok-p">)</span>
+    <span class="tok-p">{</span>
+        <span class="tok-c1">// iterate over characters in current string</span>
+        <span class="tok-k">for</span> <span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">j</span> <span class="tok-o">=</span> <span class="tok-mi">0</span><span class="tok-p">,</span> <span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-n">strlen</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]);</span> <span class="tok-n">j</span> <span class="tok-o">&lt;</span> <span class="tok-n">n</span><span class="tok-p">;</span> <span class="tok-n">j</span><span class="tok-o">++</span><span class="tok-p">)</span>
+        <span class="tok-p">{</span>
+            <span class="tok-c1">// print j&#39;th character in i&#39;th string</span>
+            <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;%c</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">,</span> <span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">][</span><span class="tok-n">j</span><span class="tok-p">]);</span>
+        <span class="tok-p">}</span>
+        <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">);</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The outer <code>for</code> loop, with <code>i</code>, is iterating over each string in <code>argv</code>.</p>
+</li>
+<li>
+<p>The inner <code>for</code> loop, with <code>j</code>, looks at <code>argv[i]</code>, and for each character in it, prints it on a new line.</p>
+</li>
+<li>
+<p>Then the inner loop repeats for the next string.</p>
+</li>
+<li>
+<p>With <code>argv[i][j]</code> we can get an individual character in <code>argv</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>So what about <code>main</code>'s output? It turns out, <code>main</code> also returns some value by default. When a program exits successfully, it returns a number <code>0</code> to indicate as much. A non-zero number, on the other hand, is used to represent an error.</p>
+</li>
+<li>
+<p>Of course, we want to see this firsthand:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include &lt;cs50.h&gt;</span>
+<span class="tok-cp">#include &lt;stdio.h&gt;</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">argc</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">argv</span><span class="tok-p">[])</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">argc</span> <span class="tok-o">!=</span> <span class="tok-mi">2</span><span class="tok-p">)</span>
+    <span class="tok-p">{</span>
+        <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;missing command-line argument</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">);</span>
+        <span class="tok-k">return</span> <span class="tok-mi">1</span><span class="tok-p">;</span>
+    <span class="tok-p">}</span>
+    <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;hello, %s</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">,</span> <span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]);</span>
+    <span class="tok-k">return</span> <span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Now, if the program doesn&#8217;t get a command-line argument, the program will quit by returning, and with the value <code>1</code>.</p>
+</li>
+<li>
+<p>Otherwise, we&#8217;ll print the argument and explicitly return the value <code>0</code> as we exit.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>We can see the exit code in terminal like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>~/workspace/ $ ./exit
+missing command-line argument
+~/workspace/ $ echo $?
+1</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>$?</code> is a magic symbol for the previous program&#8217;s exit code, and <code>echo</code> is a command-line program that just prints out values.</p>
+</li>
+<li>
+<p>We might not look for this often, but debuggers and other programs might look for it to determine if there were any errors.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Don&#8217;t forget, an array is a chunk of continuous memory, with each of the elements inside contiguous, back-to-back-to-back. And those elements are generally the same data type, as we commonly have arrays of characters or integers. We&#8217;ll need this construct to solve more complex problems, like sorting and searching.</p>
+</li>
+<li>
+<p>Phew, what an exciting day! More fun to come next week!</p>
 </li>
 </ul>
 </div>
