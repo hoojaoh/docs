@@ -437,12 +437,19 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
         </style>
         <style>
 
+            /* match margin-bottom of div.paragraph */
             div.stemblock div.content {
                 margin-bottom: 1.25em;
             }
 
+            /* fill page */
             table {
                 width: 100%;
+            }
+
+            /* allow captions to wrap */
+            table caption {
+                max-width: inherit;
             }
 
         </style>
