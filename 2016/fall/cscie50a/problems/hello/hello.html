@@ -808,7 +808,7 @@ Update complete!</code></pre>
 
 <span class="tok-kt">int</span> <span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-p">)</span>
 <span class="tok-p">{</span>
-    <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;hello, world</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">);</span>
+    <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;Hello, world!</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">);</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -952,7 +952,7 @@ Update complete!</code></pre>
 <div class="content">
 <pre class="pygments highlight"><code><span class="green">:) hello.c exists</span>
 <span class="green">:) hello.c compiles</span>
-<span class="green">:) prints "hello, world\n"</span></code></pre>
+<span class="green">:) prints "Hello, world!\n"</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -967,7 +967,7 @@ Update complete!</code></pre>
   \ expected hello.c to exist
 <span class="yellow">:| hello.c compiles</span>
   \ can't check until a frown turns upside down
-<span class="yellow">:| prints "hello, world\n"</span>
+<span class="yellow">:| prints "Hello, world!\n"</span>
   \ can't check until a frown turns upside down</code></pre>
 </div>
 </div>
@@ -981,12 +981,12 @@ Update complete!</code></pre>
 <div class="content">
 <pre class="pygments highlight"><code><span class="green">:) hello.c exists</span>
 <span class="green">:) hello.c compiles</span>
-<span class="red">:( prints "hello, world\n"</span>
+<span class="red">:( prints "Hello, world!\n"</span>
   \ expected output, but not "hello, world"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Odds are, in this case, you printed something other than <code>hello, world\n</code> verbatim, per the spec&#8217;s expectations. In particular, the above suggests you printed <code>hello, world</code>, without a trailing newline (<code>\n</code>). See why?</p>
+<p>Odds are, in this case, you printed something other than <code>Hello, world!\n</code> verbatim, per the spec&#8217;s expectations. In particular, the above suggests you printed <code>hello, world</code>, without a trailing newline (<code>\n</code>). See why?</p>
 </div>
 <div class="paragraph">
 <p><code>check50</code> lets you check your work&#8217;s correctness <em>before</em> you submit your work. Once you actually submit your work (per the directions at this spec&#8217;s end), your teacher will use <code>check50</code> to evaluate your work&#8217;s correctness officially.</p>
