@@ -572,7 +572,7 @@ ciphertext: HFNLP</code></pre>
 <p>If your program is executed without any command-line arguments, with more than one command-line argument, or with one command-line argument that contains any non-alphabetical character, your program should print an error (of your choice) and exit immediately, with <code>main</code> returning <code>1</code> (thereby signifying an error).</p>
 </li>
 <li>
-<p>Otherwise, your program must proceed to prompt the user for a string of plaintext, <em>p</em>, which it must then encrypt according to Vigenère&#8217;s cipher with <em>k</em>, ultimately printing the result and exiting, with <code>main</code> returning <code>0</code>.</p>
+<p>Otherwise, your program must proceed to prompt the user for a string of plaintext, <em>p</em>, (as by a prompt for <code>plaintext:</code>) which it must then encrypt according to Vigenère&#8217;s cipher with <em>k</em>, ultimately printing the result (prepended with <code>ciphertext:</code>) and exiting, with <code>main</code> returning <code>0</code>.</p>
 </li>
 <li>
 <p>With respect to the characters in <em>k</em>, you must treat <code>A</code> and <code>a</code> as 0, <code>B</code> and <code>b</code> as 1, &#8230;&#8203; , and <code>Z</code> and <code>z</code> as 25.</p>
@@ -624,8 +624,8 @@ Usage: ./vigenere k</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code>$ <span class="underline">./vigenere bacon</span>
-<span class="underline">Meet me at the park at eleven am</span>
-Negh zf av huf pcfx bt gzrwep oz</code></pre>
+plaintext: <span class="underline">Meet me at the park at eleven am</span>
+ciphertext: Negh zf av huf pcfx bt gzrwep oz</code></pre>
 </div>
 </div>
 </div>
@@ -688,6 +688,16 @@ Negh zf av huf pcfx bt gzrwep oz</code></pre>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
+<li>
+<p>2016-09-15</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Clarified usage of user prompts.</p>
+</li>
+</ul>
+</div>
+</li>
 <li>
 <p>2016-09-14</p>
 <div class="ulist">
