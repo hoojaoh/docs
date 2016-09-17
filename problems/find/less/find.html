@@ -4,6 +4,43 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+        <script crossorigin="anonymous" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    displayMath: [["\\[", "\\]"]],
+                    ignoreClass: "nostem|nostem|nolatexmath",
+                    inlineMath: [["\\(", "\\)"]]
+                },
+                asciimath2jax: {
+                    delimiters: [["\\$", "\\$"]],
+                    ignoreClass: "nostem|nostem|noasciimath",
+                    processEnvironments: true
+                }
+            });
+        </script>
+        <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script>
+
+            $(function() {
+
+                // add start=0 to ordered lists
+                $('ol').each(function() {
+                    if (!$(this).attr('start')) {
+                        $(this).attr('start', '0');
+                    }
+                });
+
+                // responsive embed
+                // http://getbootstrap.com/components/#responsive-embed
+                $('div.videoblock div.content').addClass('embed-responsive embed-responsive-16by9');
+                $('div.videoblock div.content iframe').addClass('embed-responsive-item');
+
+            });
+
+        </script>
         <style>
 
             /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -398,7 +435,26 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 .listingblock .pygments .tok-ss { color: #a31515 } /* Literal.String.Symbol */
 
         </style>
-        <title></title>
+        <style>
+
+            /* match margin-bottom of div.paragraph */
+            div.stemblock div.content {
+                margin-bottom: 1.25em;
+            }
+
+            /* fill page */
+            table {
+                width: 100%;
+            }
+
+            /* allow captions to wrap */
+            .tableblock > caption {
+                max-width: inherit;
+                white-space: inherit;
+            }
+
+        </style>
+        <title>Find</title>
     </head>
     <body class="toc2 toc-left">
         <div id="header">
@@ -406,341 +462,504 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
                 <div id="toctitle">Table of Contents</div>
                 <ul class="sectlevel1">
 <li><a href="#tl-dr">tl;dr</a></li>
-<li><a href="#help">Help</a></li>
-<li><a href="#reminders">Reminders</a></li>
-<li><a href="#getting-started">Getting Started</a></li>
-<li><a href="#what-to-do">What to Do</a></li>
-<li><a href="#how-to-submit">How to Submit</a>
+<li><a href="#distribution">Distribution</a>
 <ul class="sectlevel2">
-<li><a href="#step-1-of-4">Step 1 of 4</a></li>
-<li><a href="#step-2-of-4">Step 2 of 4</a></li>
-<li><a href="#step-3-of-4">Step 3 of 4</a></li>
-<li><a href="#step-4-of-4">Step 4 of 4</a></li>
+<li><a href="#downloading">Downloading</a></li>
+<li><a href="#understanding">Understanding</a></li>
 </ul>
 </li>
+<li><a href="#specification">Specification</a>
+<ul class="sectlevel2">
+<li><a href="#code-search-code"><code>search</code></a></li>
+<li><a href="#code-sort-code"><code>sort</code></a></li>
+</ul>
+</li>
+<li><a href="#walkthroughs">Walkthroughs</a>
+<ul class="sectlevel2">
+<li><a href="#search">search</a></li>
+<li><a href="#sort">sort</a></li>
+</ul>
+</li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#testing">Testing</a>
+<ul class="sectlevel2">
+<li><a href="#code-check50-code"><code>check50</code></a></li>
+</ul>
+</li>
+<li><a href="#staff-s-solution">Staff&#8217;s Solution</a></li>
+<li><a href="#hints">Hints</a></li>
+<li><a href="#faqs">FAQs</a></li>
+<li><a href="#changelog">CHANGELOG</a></li>
 </ul>
             </div>
         </div>
         <div id="content">
-            <h1>Problem Set 2: Crypto</h1>
+            <h1>Find</h1>
 <div class="sect1">
 <h2 id="tl-dr"><a class="link" href="#tl-dr">tl;dr</a></h2>
 <div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic" start="0">
-<li>
-<p>Watch <a href="https://video.cs50.net/2016/fall/lectures/2">Week 2&#8217;s lecture</a>.</p>
-</li>
-<li>
-<p>Infer a user&#8217;s initials from their name with <code>initials.c</code>.</p>
-</li>
-<li>
-<p>Choose two adventures:</p>
-<div class="openblock">
+<div class="paragraph">
+<p>Implement a program that finds a number among numbers, per the below.</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Implement Caesar&#8217;s cipher.</p>
-</li>
-<li>
-<p>Implement Vigenère&#8217;s cipher.</p>
-</li>
-<li>
-<p>Crack passwords.</p>
-</li>
-</ul>
+<pre class="pygments highlight"><code>$ <span class="underline">./generate 1000 | ./find 42</span>
+Didn't find needle in haystack.</code></pre>
 </div>
-</div>
-</div>
-</li>
-<li>
-<p>Submit your code.</p>
-</li>
-<li>
-<p>Submit a form.</p>
-</li>
-</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="help"><a class="link" href="#help">Help</a></h2>
+<h2 id="distribution"><a class="link" href="#distribution">Distribution</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>For help with Week 2 and Problem Set 2:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Attend David&#8217;s and Rob&#8217;s walkthrough on Wed 9/14, 1pm – 2:30pm, in Sanders.</p>
-</li>
-<li>
-<p>Watch Zamyla&#8217;s walkthroughs herein.</p>
-</li>
-<li>
-<p>Attend your TF&#8217;s section (or another if you have a conflict).</p>
-</li>
-<li>
-<p>Post questions and search answers in <a href="https://cs50.harvard.edu/discuss">CS50 Discuss</a>.</p>
-</li>
-<li>
-<p>Attend <a href="https://cs50.harvard.edu/hours">office hours</a>.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="reminders"><a class="link" href="#reminders">Reminders</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Per <a href="https://video.cs50.net/2016/fall/lectures/2">Week 2&#8217;s lecture</a>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Use <code>help50</code> as needed.</p>
-</li>
-<li>
-<p>Use <code>eprintf</code> as needed.</p>
-</li>
-<li>
-<p>Use <code>debug50</code> as needed.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="getting-started"><a class="link" href="#getting-started">Getting Started</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Alright, here we go again!</p>
-</div>
-<div class="paragraph">
-<p>Log into <a href="https://cs50.io/">cs50.io</a> and execute</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>update50</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>within a terminal window to make sure your workspace is up-to-date. If you somehow closed your terminal window (and can&#8217;t find it!), make sure that <strong>Console</strong> is checked under the <strong>View</strong> menu, then click the green, circled plus (+) in CS50 IDE&#8217;s bottom half, then select <strong>New Terminal</strong>.</p>
-</div>
-<div class="paragraph">
-<p>Next, execute</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>mkdir ~/workspace/pset2/</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>at your prompt in order to make a directory called <code>pset2</code> in your <code>workspace</code> directory. Take care not to overlook the space between <code>mkdir</code> and <code>~/workspace/pset2</code> or any other character for that matter!  Keep in mind that <code>~</code> denotes your home directory, <code>~/workspace</code> denotes a directory called <code>workspace</code> therein, and <code>~/workspace/pset2</code> denotes a directory called <code>pset2</code> within <code>~/workspace</code>.</p>
-</div>
-<div class="paragraph">
-<p>Now execute</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>cd ~/workspace/pset2/</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>to move yourself into (i.e., open) that directory. Your prompt should now resemble the below.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>~/workspace/pset2/ $</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If not, retrace your steps and see if you can determine where you went wrong. You can actually execute</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">history</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>at the prompt to see your last several commands in chronological order if you&#8217;d like to do some sleuthing. You can also scroll through the same one line at a time by hitting your keyboard&#8217;s up and down arrows; hit Enter to re-execute any command that you&#8217;d like.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="what-to-do"><a class="link" href="#what-to-do">What to Do</a></h2>
-<div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Implement either of:</p>
-<div class="openblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p><a href="../../../../problems/initials/less/initials.html">Initials</a>, less comfortable</p>
-</li>
-<li>
-<p><a href="../../../../problems/initials/more/initials.html">Initials</a>, more comfortable</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</li>
-<li>
-<p>Implement any two (2) of:</p>
-<div class="openblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p><a href="../../../../problems/caesar/caesar.html">Caesar</a>, less comfortable</p>
-</li>
-<li>
-<p><a href="../../../../problems/vigenere/vigenere.html">Vigenere</a>, less comfortable</p>
-</li>
-<li>
-<p><a href="../../../../problems/crack/crack.html">Crack</a>, more comfortable</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="how-to-submit"><a class="link" href="#how-to-submit">How to Submit</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>For this problem set, we&#8217;ll be using a new submission system based on GitHub, a popular site for storing code. Recall that for Problem Set 0 you signed up (hopefully!) for an account on <a href="https://github.com/">github.com</a>. The new system&#8217;s still in "beta" (a testing phase), so please forgive any bugs! We&#8217;ll keep an eye on <a href="https://cs50.net/discuss">CS50 Discuss</a> and email over the weekend in case anything goes wrong so that we can fix right away!</p>
-</div>
 <div class="sect2">
-<h3 id="step-1-of-4"><a class="link" href="#step-1-of-4">Step 1 of 4</a></h3>
-<div class="paragraph">
-<p>Execute</p>
-</div>
+<h3 id="downloading"><a class="link" href="#downloading">Downloading</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>sudo apt-get install -y expect
-update50</code></pre>
+<pre class="pygments highlight"><code>$ wget https://github.com/cs50/problems/archive/find.zip
+$ unzip find.zip
+$ rm find.zip
+$ cd find
+$ ls
+Makefile    find.c      generate.c  helpers.c   helpers.h</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>again to ensure that your IDE is up-to-date.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="step-2-of-4"><a class="link" href="#step-2-of-4">Step 2 of 4</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Recall that you were asked to implement the less-comfortable or more-comfortable version of <code>initials</code>.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Be sure that <code>initials.c</code> is in <code>~/workspace/pset2/initials</code>, as with:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>cd ~/workspace/pset2/initials/
-ls</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Recall that you were asked to implement any two (2) of <code>caesar</code>, <code>vigenere</code>, and <code>crack</code>.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>If you implemeneted <code>caesar</code>, be sure that <code>caesar.c</code> is in <code>~/workspace/pset2/caesar/</code>.</p>
-</li>
-<li>
-<p>If you implemeneted <code>vigenere</code>, be sure that <code>vigenere.c</code> is in <code>~/workspace/pset2/vigenere/</code>.</p>
-</li>
-<li>
-<p>If you implemeneted <code>crack</code>, be sure that <code>crack.c</code> is in <code>~/workspace/pset2/crack/</code>.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
+<h3 id="understanding"><a class="link" href="#understanding">Understanding</a></h3>
+<div class="paragraph">
+<p>Implemented in <code>generate.c</code> is a program that uses a "pseudorandom-number generator" (via a function called <code>drand48</code>) to generate a whole bunch of random (well, pseudorandom, since computers can&#8217;t actually generate truly random) numbers, one per line, each of which is in [0.0, 1.0), so to speak. That is, each is greater than or equal to 0 and less than 1.0.</p>
 </div>
 <div class="paragraph">
-<p>If not sure how to confirm or fix something, do just reach out to your TF or via <a href="https://cs50.net/discuss">CS50 Discuss</a>!</p>
+<p>Go ahead and compile this program by executing the command below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>make generate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now run the program you just compiled by executing the command below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should be informed of the program&#8217;s proper usage, per the below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Usage: generate n [s]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As this output suggests, this program expects one or two command-line arguments. The first, <code>n</code>, is required; it indicates how many pseudorandom numbers you&#8217;d like to generate. The second, <code>s</code>, is optional, as square brackets imply; if supplied, it represents the value that the pseudorandom-number generator should use as its "seed." A seed is simply an input to a pseudorandom-number generator that influences its outputs. For instance, if you seed <code>drand48</code> by first calling <code>srand48</code> (another function whose purpose is to "seed" <code>drand48</code>) with an argument of, say, <code>0</code>, and then call <code>drand48</code> itself three times, <code>drand48</code> might return <code>0.170828</code>, then <code>0.749902</code>, then <code>0.096372</code>. But if you instead seed <code>drand48</code> by first calling <code>srand48</code> with an argument of, say, <code>1</code>, and then call <code>drand48</code> itself three times, <code>drand48</code> might instead return <code>0.041630</code>, then <code>0.454492</code>, then <code>0.834817</code>. But if you re-seed <code>drand48</code> by calling <code>srand48</code> again with an argument of <code>0</code>, the next three times you call <code>drand48</code>, you&#8217;ll again get <code>0.170828</code>, then <code>0.749902</code>, then <code>0.096372</code>! See, not so random.</p>
+</div>
+<div class="paragraph">
+<p>Go ahead and run this program again, this time with a value of, say, <code>10</code> for <code>n</code>, as in the below; you should see a list of 10 pseudorandom numbers.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 10</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the program a third time using that same value for <code>n</code>; you should see a different list of 10 numbers. Now try running the program with a value for <code>s</code> too (e.g., <code>0</code>), as in the below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 10 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now run that same command again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 10 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bet you saw the same "random" sequence of ten numbers again? Yup, that&#8217;s what happens if you don&#8217;t vary a pseudorandom number generator&#8217;s initial seed.</p>
+</div>
+<div class="paragraph">
+<p>Now take a look at <code>generate.c</code> itself. (Remember how?) Comments atop that file explain the program&#8217;s overall functionality. But it looks like we forgot to comment the code itself. Read over the code carefully until you understand each line and then comment our code for us, replacing each <code>TODO</code> with a phrase that describes the purpose or functionality of the corresponding line(s) of code. (Know that an <code>unsigned int</code> is just an <code>int</code> that cannot be negative.) And for more details on <code>rand</code> and <code>srand</code>, recall that you can execute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>man drand48</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>man srand48</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once done commenting <code>generate.c</code>, re-compile the program to be sure you didn&#8217;t break anything by re-executing the command below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>make generate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If <code>generate</code> no longer compiles properly, take a moment to fix what you broke!</p>
+</div>
+<div class="paragraph">
+<p>Now, recall that <code>make</code> automates compilation of your code so that you don&#8217;t have to execute <code>clang</code> manually along with a whole bunch of switches. Notice, in fact, how <code>make</code> just executed a pretty long command for you, per the tool&#8217;s output. However, as your programs grow in size, <code>make</code> won&#8217;t be able to infer from context anymore how to compile your code; you&#8217;ll need to start telling <code>make</code> how to compile your program, particularly when they involve multiple source (i.e., <code>.c</code>) files. And so we&#8217;ll start relying on "Makefiles," configuration files that tell <code>make</code> exactly what to do.</p>
+</div>
+<div class="paragraph">
+<p>How did <code>make</code> know how to compile generate in this case? It actually used a configuration file that we wrote. Go ahead and look at the file called <code>Makefile</code> that&#8217;s in the same directory as <code>generate.c</code>. This <code>Makefile</code> is essentially a list of rules that we wrote for you that tells make how to build generate from <code>generate.c</code> for you. The relevant lines appear below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="Makefile"><span class="tok-nf">generate</span><span class="tok-o">:</span> <span class="tok-n">generate</span>.<span class="tok-n">c</span>
+    clang -ggdb3 -O0 -std<span class="tok-o">=</span>c11 -Wall -Werror -o generate generate.c</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first line tells <code>make</code> that the "target" called <code>generate</code> should be built by invoking the second line&#8217;s command. Moreover, that first line tells <code>make</code> that <code>generate</code> is dependent on <code>generate.c</code>, the implication of which is that <code>make</code> will only re-build generate on subsequent runs if that file was modified since <code>make</code> last built <code>generate</code>. Neat time-saving trick, eh? In fact, go ahead and execute the command below again, assuming you haven&#8217;t modified <code>generate.c</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>make generate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should be informed that generate is already up-to-date. Incidentally, know that the leading whitespace on that second line is not a sequence of spaces but, rather, a tab. Unfortunately, <code>make</code> requires that commands be preceded by tabs, so be careful not to change them to spaces, else you may encounter strange errors! The <code>-Werror</code> flag, recall, tells <code>clang</code> to treat warnings (bad) as though they&#8217;re errors (worse) so that you&#8217;re forced (in a good, instructive way!) to fix them.</p>
+</div>
+<div class="paragraph">
+<p>Now take a look at <code>find.c</code>. Notice that this program expects a single command-line argument: a "needle" to search for in a "haystack" of values. Once done looking over the code, go ahead and compile the program by executing the command below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>make find</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice, per that command&#8217;s output, that <code>make</code> actually executed the below for you.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>clang -ggdb3 -O0 -std=c11 -Wall -Werror -o find find.c helpers.c -lcs50 -lm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice further that you just compiled a program comprising not one but two <code>.c</code> files: <code>helpers.c</code> and <code>find.c</code>. How did <code>make</code> know what to do? Well, again, open up <code>Makefile</code> to see the man behind the curtain. The relevant lines appear below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="Makefile"><span class="tok-nf">find</span><span class="tok-o">:</span> <span class="tok-n">find</span>.<span class="tok-n">c</span> <span class="tok-n">helpers</span>.<span class="tok-n">c</span> <span class="tok-n">helpers</span>.<span class="tok-n">h</span>
+    clang -ggdb3 -O0 -std<span class="tok-o">=</span>c11 -Wall -Werror -o find find.c helpers.c -lcs50 -lm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Per the dependencies implied above (after the colon), any changes to <code>find.c</code>, <code>helpers.c</code>, or <code>helpers.h</code> will compel <code>make</code> to rebuild find the next time it&#8217;s invoked for this target.</p>
+</div>
+<div class="paragraph">
+<p>Go ahead and run this program by executing, say, the below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./find 13</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll be prompted to provide some hay (i.e., some integers), one "straw" at a time. As soon as you tire of providing integers, hit ctrl-d to send the program an <code>EOF</code> (end-of-file) character. That character will compel <code>get_int</code> from the CS50 Library to return <code>INT_MAX</code>, a constant that, per <code>find.c</code>, will compel <code>find</code> to stop prompting for hay. The program will then look for that needle in the hay you provided, ultimately reporting whether the former was found in the latter. In short, this program searches an array for some value. At least, it should, but it won&#8217;t find anything yet! That&#8217;s where you come in. More on your role in a bit.</p>
+</div>
+<div class="paragraph">
+<p>In turns out you can automate this process of providing hay, though, by "piping" the output of <code>generate</code> into <code>find</code> as input. For instance, the command below passes 1,000 pseudorandom numbers to <code>find</code>, which then searches those values for <code>42</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 1000 | ./find 42</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that, when piping output from <code>generate</code> into <code>find</code> in this manner, you won&#8217;t actually see <code>generate</code>'s numbers, but you will see <code>find</code>'s prompts.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can "redirect" <code>generate</code>'s output to a file with a command like the below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 1000 &gt; numbers.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can then redirect that file&#8217;s contents as input to <code>find</code> with the command below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./find 42 &lt; numbers.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s finish looking at that <code>Makefile</code>. Notice the line below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>all: find generate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This target implies that you can build both <code>generate</code> and <code>find</code> simply by executing the below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>make all</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Even better, the below is equivalent (because <code>make</code> builds a <code>Makefile</code>'s first target by default).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>make</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If only you could whittle this whole problem set down to a single command! Finally, notice these last lines in <code>Makefile</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>clean:
+    rm -f *.o a.out core find generate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This target allows you to delete all files ending in <code>.o</code> or called <code>core</code> (more on that soon!), <code>find</code>, or <code>generate</code> simply by executing the command below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>make clean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Be careful not to add, say, <code>*.c</code> to that last line in <code>Makefile</code>! (Why?)</p>
+</div>
+<div class="paragraph">
+<p>Notice now that, in <code>find.c</code>, <code>main</code> calls <code>search</code>, a function declared in <code>helpers.h</code>. Unfortunately, we forgot to implement that function fully in <code>helpers.c</code>! Indeed, take a peek at <code>helpers.c</code>, and you&#8217;ll see that <code>search</code> always returns <code>false</code>, whether or not <code>value</code> is in <code>values</code>. To be sure, we could have put the contents of <code>helpers.h</code> and <code>helpers.c</code> in <code>find.c</code> itself. But it&#8217;s sometimes better to organize programs into multiple files, especially when some functions are essentially "utility functions" that might later prove useful to other programs as well, much like those in the CS50 Library.</p>
+</div>
+<div class="paragraph">
+<p>Notice too, per <code>helpers.h</code>, that the prototype for <code>search</code> is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-kt">bool</span> <span class="tok-nf">search</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">value</span><span class="tok-p">,</span> <span class="tok-kt">int</span> <span class="tok-n">values</span><span class="tok-p">[],</span> <span class="tok-kt">int</span> <span class="tok-n">n</span><span class="tok-p">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And the prototype for <code>sort</code> is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-kt">void</span> <span class="tok-nf">sort</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">values</span><span class="tok-p">[],</span> <span class="tok-kt">int</span> <span class="tok-n">n</span><span class="tok-p">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both functions take an array, <code>values</code>, as one of their arguments as well as an integer, <code>n</code>, the size of that array. That&#8217;s because, when passing an array to a function, you have to pass in its size separately; you can&#8217;t infer an array&#8217;s size from the array itself.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specification"><a class="link" href="#specification">Specification</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Complete the implementation of <code>find</code> by completing the implementation of <code>search</code> and <code>sort</code> in <code>helpers.c</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="code-search-code"><a class="link" href="#code-search-code"><code>search</code></a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Your implementation must return <code>false</code> immediately if <code>n</code> is non-negative.</p>
+</li>
+<li>
+<p>Your implementation must return <code>true</code> if <code>value</code> is in <code>values</code> and <code>false</code> if <code>value</code> is not in <code>values</code>.</p>
+</li>
+<li>
+<p>The running time of your implementation must be in <em>O</em>(log <em>n</em>).</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="step-3-of-4"><a class="link" href="#step-3-of-4">Step 3 of 4</a></h3>
+<h3 id="code-sort-code"><a class="link" href="#code-sort-code"><code>sort</code></a></h3>
 <div class="ulist">
 <ul>
 <li>
-<p>To submit <code>initials</code>, execute</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>cd ~/workspace/pset2/initials/
-submit50 initials</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>inputting your GitHub username and GitHub password as prompted.</p>
-</div>
+<p>Your implemenation must sort, from smallest to largest, the array of numbers that it&#8217;s passed.</p>
 </li>
 <li>
-<p>To submit <code>caesar</code> (if you implemented it), execute:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>cd ~/workspace/pset2/caesar/
-submit50 caesar</code></pre>
-</div>
-</div>
+<p>The running time of your implementation must be in <em>O</em>(<em>n</em><sup>2</sup>), where <em>n</em> is the array&#8217;s size.</p>
 </li>
 <li>
-<p>To submit <code>vigenere</code> (if you implemented it), execute:</p>
+<p>You may not alter the function&#8217;s declaration. Its prototype must remain:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>cd ~/workspace/pset2/vigenere/
-submit50 vigenere</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>To submit <code>crack</code> (if you implemented it), execute:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>cd ~/workspace/pset2/crack/
-submit50 crack</code></pre>
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-kt">void</span> <span class="tok-nf">sort</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">values</span><span class="tok-p">[],</span> <span class="tok-kt">int</span> <span class="tok-n">n</span><span class="tok-p">);</span></code></pre>
 </div>
 </div>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>If you run into any trouble, email <a href="mailto:sysadmins@cs50.harvard.edu">sysadmins@cs50.harvard.edu</a>!</p>
 </div>
-<div class="paragraph">
-<p>You may resubmit any problem as many times as you&#8217;d like.</p>
 </div>
-<div class="paragraph">
-<p>Incidentally, the white and yellow output from <code>submit50</code> will soon be simplified; it&#8217;s some short-term diagnostic output!</p>
+</div>
+<div class="sect1">
+<h2 id="walkthroughs"><a class="link" href="#walkthroughs">Walkthroughs</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="search"><a class="link" href="#search">search</a></h3>
+<div class="videoblock">
+<div class="content">
+<iframe src="https://www.youtube.com/embed/qDH1kHKlOYI?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="step-4-of-4"><a class="link" href="#step-4-of-4">Step 4 of 4</a></h3>
+<h3 id="sort"><a class="link" href="#sort">sort</a></h3>
+<div class="videoblock">
+<div class="content">
+<iframe src="https://www.youtube.com/embed/eXeP__gBMrM?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usage"><a class="link" href="#usage">Usage</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Submit <a href="https://forms.cs50.net/2016/fall/psets/2" class="bare">https://forms.cs50.net/2016/fall/psets/2</a>!</p>
+<p>Your program should behave per the examples below. Assumed that the underlined text is what some user has typed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ <span class="underline">./find TODO</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="testing"><a class="link" href="#testing">Testing</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When ready to check the correctness of your program, try running the command below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 1000 50 | ./find 127</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>This was Problem Set 2.</p>
+<p>Because one of the numbers outputted by <code>generate</code>, when seeded with <code>50</code>, is <code>127</code>, your code should find that "needle"! By contrast, try running the command below as well.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 1000 50 | ./find 128</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because <code>128</code> is not among the numbers outputted by <code>generate</code>, when seeded with <code>50</code>, your code shouldn&#8217;t find that needle. Best to try some other tests as well, as by running <code>generate</code> with some seed, taking a look at its output, then piping that same output to <code>find</code>, looking for a "needle" you know to be among the "hay".</p>
+</div>
+<div class="paragraph">
+<p>Incidentally, note that <code>main</code> in <code>find.c</code> is written in such a way that <code>find</code> returns <code>0</code> if the needle is found, else it returns <code>1</code>. You can check the so-called "exit code" with which <code>main</code> returns by executing</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>echo $?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>after running some other command. For instance, assuming your implementation of <code>search</code> is correct, if you run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 1000 50 | ./find 127
+echo $?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you should see <code>0</code>, since <code>127</code> is, again, among the 1,000 numbers outputted by <code>generate</code> when seeded with <code>50</code>, and so <code>search</code> (written by you) should return <code>true</code>, in which case <code>main</code> (written by us) should return (i.e., exit with) <code>0</code>. By contrast, assuming your implementation of <code>search</code> is correct, if you run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>./generate 1000 50 | ./find 128
+echo $?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you should see <code>1</code>, since <code>128</code> is, again, not among the 1,000 numbers outputted by <code>generate</code> when seeded with <code>50</code>, and so <code>search</code> (written by you) should return <code>false</code>, in which case <code>main</code> (written by us) should return (i.e., exit with) <code>1</code>. Make sense?</p>
+</div>
+<div class="sect2">
+<h3 id="code-check50-code"><a class="link" href="#code-check50-code"><code>check50</code></a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>check50 2016.find.less helpers.c</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="staff-s-solution"><a class="link" href="#staff-s-solution">Staff&#8217;s Solution</a></h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>~cs50/pset3/find</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hints"><a class="link" href="#hints">Hints</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before you implement <code>search</code> in <em>O</em>(log <em>n</em>) time, you might want to implement it temporarily in <em>O</em>(<em>n</em>) time, as with linear search, if only because it&#8217;s a bit easier to get right. That way, you can move on to <code>sort</code>, knowing that <code>search</code> already works. And once <code>sort</code> works, you can go back and re-implement <code>search</code> in <em>O</em>(log <em>n</em>) time, as with binary search. Just remember to!</p>
+</div>
+<div class="paragraph">
+<p>Ultimately, you are welcome to implement <code>search</code> iteratively (with a loop) or recursively (wherein a function calls itself). If you pursue the latter, though, know that you may not change our declaration of <code>search</code>, but you may write a new, recursive function (that perhaps takes different parameters) that <code>search</code> itself calls.</p>
+</div>
+<div class="paragraph">
+<p>For <code>sort</code>, odds are you&#8217;ll want to implement bubble sort, selection sort, or insertion sort! Just realize that there&#8217;s no one "right" way to implement any of those algorithms; variations abound. In fact, you&#8217;re welcome to improve upon them as you see fit, so long as your implementation remains in <em>O</em>(<em>n</em><sup>2</sup>). Although you may not alter our declaration of <code>sort</code>, you&#8217;re welcome to define your own function(s) in <code>helpers.c</code> that <code>sort</code> itself may then call.</p>
+</div>
+<div class="paragraph">
+<p>We leave it to you to determine how best to test your implementation of <code>search</code> and <code>sort</code>. But don&#8217;t forget that <code>eprintf</code> is your friend while debugging! And don&#8217;t forget that you can generate the same sequence of pseudorandom numbers again and again by explicitly specifying <code>generate</code>'s seed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="faqs"><a class="link" href="#faqs">FAQs</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>None so far! Reload this page periodically to check if any arise!</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="changelog"><a class="link" href="#changelog">CHANGELOG</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>2016-09-16</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Initial release.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
