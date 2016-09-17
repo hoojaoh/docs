@@ -398,7 +398,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 .listingblock .pygments .tok-ss { color: #a31515 } /* Literal.String.Symbol */
 
         </style>
-        <title>Week 2</title>
+        <title>Week 3</title>
     </head>
     <body class="toc2 toc-left">
         <div id="header">
@@ -407,6 +407,8 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
                 <ul class="sectlevel1">
 <li><a href="#last-time">Last Time</a></li>
 <li><a href="#sorting">Sorting</a></li>
+<li><a href="#running-time">Running Time</a></li>
+<li><a href="#sorting-2">Sorting</a></li>
 </ul>
             </div>
         </div>
@@ -470,6 +472,13 @@ return false</code></pre>
 <ul>
 <li>
 <p>Notice that we have <code>return false</code> outside of the <code>for</code> loop, so at the end of the loop, if we&#8217;ve looked at all the elements in the array but not yet found what we&#8217;ve been looking for, we can say we haven&#8217;t found it.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>We also indent our code to indicate the nesting of statements. <code>return false</code>, in particular, will execute after the entire <code>for</code> loop has completed, rather than after just looking at the first element, if it were indented.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -596,6 +605,468 @@ else
 </li>
 </ul>
 </div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="running-time"><a class="link" href="#running-time">Running Time</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>For bubble sort, our algorithm might look like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>repeat until no swaps
+    for i from 0 to n-2
+        if i'th and i+1'th elements out of order
+            swap them</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Recall that the element at the end of the list is the <code>n - 1</code>th since we start counting at <code>0</code>. So looking at pairs of elements, the last pair would stop at <code>n - 2</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>For selection sort:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>for i from 0 to n-1
+    find smallest element between i'th and n-1'th
+    swap smallest with i'th element</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Now we&#8217;re building a sorted list by going through the unsorted part of the list, finding the smallest element, and placing it at the end of our sorted list.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Insertion sort:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>for i from 1 to n-1
+    call 0'th through i-1'th elements the "sorted side"
+    remove i'th element
+    insert it into the sorted side in order</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Here we are building a sorted list by taking each element in the list, and inserting it into the correct spot of the sorted list so far.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>We can use the number of steps as a unit for measuring how efficient an algorithm is, but any unit is fine as long as we&#8217;re consistent.</p>
+</li>
+<li>
+<p>For bubble sort, if we have a list with <em>n</em> elements, we would compare (<em>n</em> - 1) pairs in our first pass.</p>
+</li>
+<li>
+<p>And after our first pass, the largest element will have been swapped all the way to the right. So in our second pass, we&#8217;ll only need (<em>n</em> - 2) comparisons.</p>
+</li>
+<li>
+<p>So we&#8217;ll have made a total of (<em>n</em> - 1) + (<em>n</em> - 2) + &#8230;&#8203; + 1 comparisons. And this one actually adds up to <em>n</em>(<em>n</em> - 1)/2. And that multiplies out to (<em>n</em><sup>2</sup> - <em>n</em>)/2.</p>
+</li>
+<li>
+<p>When comparing running time, we generally just want the term with the biggest order of magnitude, since that&#8217;s the only one that really matters when <em>n</em> gets really big. And we can even get rid of the factor of 1/2.</p>
+</li>
+<li>
+<p>We can look at an example (not a proof!) to help us understand this. Imagine we had 1,000,000 numbers to sort. Then bubble sort will take 1,000,000<sup>2</sup>/2 - 1,000,000/2 steps, and if we multiply that out, we get 500,000,000,000 - 500,000 = 499,999,500,000. Which is awfully close to the first number.</p>
+</li>
+<li>
+<p>So when we have an expression like (<em>n</em><sup>2</sup> - <em>n</em>)/2, we can say it is on the order of, <em>O</em>(<em>n</em><sup>2</sup>).</p>
+</li>
+<li>
+<p>There is a more formal mathematical definition, but we&#8217;ll consider it to be an upper bound on how long an algorithm might take.</p>
+</li>
+<li>
+<p>Depending on the algorithm, we might see:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>O</em>(<em>n</em><sup>2</sup>)</p>
+</li>
+<li>
+<p><em>O</em>(<em>n</em> log <em>n</em>)</p>
+</li>
+<li>
+<p><em>O</em>(<em>n</em>)</p>
+</li>
+<li>
+<p><em>O</em>(log <em>n</em>)</p>
+</li>
+<li>
+<p><em>O</em>(1)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>This last one takes one step, or ten steps, or a constant number of steps regardless of the size of the problem.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>It turns out, if we wrote out the steps, bubble sort, insertion sort, and selection sort all have running time of <em>O</em>(<em>n</em><sup>2</sup>). Even though they&#8217;re all slightly different, they all involved some variation of looking through up to <em>n</em> elements, up to <em>n</em> times. With insertion sort, we&#8217;re looking at each element just once, but as we sort we might need to shift all the elements in the list we&#8217;ve already sorted, which requires work.</p>
+</li>
+<li>
+<p>Finding an element in an unsorted list, with linear search, for example, would have running time of <em>O</em>(<em>n</em>), since we might look at up to all <em>n</em> elements before we find the correct one.</p>
+</li>
+<li>
+<p>Binary search would have a logarithmic running time, <em>O</em>(log <em>n</em>), since we are dividing the problem in half each time.</p>
+</li>
+<li>
+<p>And constant time algorithms, with running time <em>O</em>(1), might include adding numbers or printing something, since in each case we can say it takes one step.</p>
+</li>
+<li>
+<p>Another symbol we might see is big Omega, <strong>Ω</strong>, which we can think of as the opposite of big O. Big O is the running time of the worst-case scenario (in the case of sorting, for many algorithms the worst-case scenario is a list that is completely backwards), but big Omega is the lower bound, or the best case.</p>
+</li>
+<li>
+<p>An algorithm with Ω(<em>n</em><sup>2</sup>), for example, would be selection sort. Even if the list was already sorted, we wouldn&#8217;t know because we look for the smallest element in the rest of the list, one at a time, so we end up looking at about <em>n</em><sup>2</sup> elements.</p>
+</li>
+<li>
+<p>Bubble sort, on the other hand, Ω(<em>n</em>), since we stop if we made no swaps, and after looking at all <em>n</em> elements, we can realize that a sorted list was indeed sorted, and stop.</p>
+</li>
+<li>
+<p>But we realize that it is impossible to sort a list with <em>n</em> elements in Ω(log <em>n</em>) or Ω(1), since at the least we need to look at all <em>n</em> elements to make sure it is sorted.</p>
+</li>
+<li>
+<p>Algorithms for search, like linear search or binary search, tend to have Ω(1) running time, since in the best case we get lucky and find our element on the first try.</p>
+</li>
+<li>
+<p>And we have yet another notation, theta, Θ, if the running time of an algorithm is the same in the worst-case (Ω) and the best-case (O).</p>
+</li>
+<li>
+<p>We take a look at <a href="https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html">this visualization</a> of how sorting differs between algorithms, and also <a href="http://cglab.ca/~morin/misc/sortalg/">this visualization</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sorting-2"><a class="link" href="#sorting-2">Sorting</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Recall that our pseudocode for finding Mike Smith in the phone book was this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code> 0   pick up phone book
+ 1   open to middle of phone book
+ 2   look at names
+ 3   if Smith is among names
+ 4       call Mike
+ 5   else if Smith is earlier in book
+ 6       open to middle of left half of book
+ 7       go back to step 2
+ 8   else if "Smith" is later in book
+ 9       open to middle of right half of book
+10       go back to step 2
+11   else
+12       quit</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In that version, we used <code>go back</code> to create loops in our algorithm. But we could more simply do something like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code> 0   pick up phone book
+ 1   open to middle of phone book
+ 2   look at names
+ 3   if Smith is among names
+ 4       call Mike
+ 5   else if Smith is earlier in book
+ 6       search for Mike in left half of book
+ 7
+ 8   else if "Smith" is later in book
+ 9       search for Mike in right half of book
+10
+11   else
+12       quit</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now our program is recursive, where it calls itself.</p>
+</li>
+<li>
+<p>We can write pseudocode for merge sort too:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>on input of n elements
+    if n &lt; 2
+        return
+    else
+        sort left half of elements
+        sort right half of elements
+        merge sorted halves</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If we have fewer than 2 elements, then our list has to be sorted so we should stop.</p>
+</li>
+<li>
+<p>Now we rely on the same function to sort the halves for us, and once it sorts the halves we&#8217;ll merge them together.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>We can best see this with an example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>4 8 6 2 1 7 5 3        // unsorted list</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>| 4 8 6 2 | 1 7 5 3    // sort the left half</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>| 4 8 | 6 2 1 7 5 3    // sort the left half of the left half</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>| 4 | 8 6 2 1 7 5 3    // sort the left half of the left half of the left half, which is just 4, so it's sorted</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>4 | 8 | 6 2 1 7 5 3    // sort the right half of the left half of the left half, which is just 8, so it's sorted</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>| _ _ | 6 2 1 7 5 3    // now we merge the left half of the left half
+| 4 8 |                // use extra memory to keep our sorted list of size 2</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>_ _ | 6 2 | 1 7 5 3    // now we go back and sort the right half of the left half
+4 8 | 2 6 |            // sorted right half of right half</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now we can remember that our second statement earlier, "sort the left half", is wrapping up with merging its two sorted halves together:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>_ _ | 6 2 | 1 7 5 3
+4 8 | 2 6 |
+2 4   6 8 |            // merged left half</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To merge two sorted lists, we start at the beginning of both lists, and take whichever element is the smallest at each step.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Now we repeat with the right half:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>_ _ | _ _ | 1 7 5 3
+_ _ | _ _ |
+2 4   6 8 |</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>_ _ | _ _ | 1 7 5 3
+_ _ | _ _ | 1 7 |      // sorted left half of right half
+2 4   6 8 |</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>_ _ | _ _ | 1 7 5 3
+_ _ | _ _ | 1 7 | 3 5 |  // sorted right half of right half
+2 4   6 8 |</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>_ _ | _ _ | 1 7 5 3
+_ _ | _ _ | 1 7 | 3 5 |  // sorted right half of right half
+2 4   6 8 |</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>_ _ | _ _ | 1 7 5 3
+_ _ | _ _ | _ _ | _ _ |
+2 4   6 8 | 1 3   5 7    // merged right half</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now we&#8217;re back to the very first pass of our algorithm where we need to merge both halves, so:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>_ _ | _ _ | 1 7 5 3
+_ _ | _ _ | _ _ | _ _ |
+2 4   6 8 | 1 3   5 7
+1 2   3 4   5 6   7 8    // merged list</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>It seems that there were a lot of steps, and on top of that we needed a lot of extra space to keep the new lists stored somewhere in memory.</p>
+</li>
+<li>
+<p>But we could have used the space in the original list as we went along, so we could get by with memory for just two lists.</p>
+</li>
+<li>
+<p>And with a list of 8 elements, we only needed to have 3 layers, splitting it three times.</p>
+</li>
+<li>
+<p>So with dividing the problem in half each time, it seems that we&#8217;ve reduced our problem to something logarithmic. And at each layer, we looked at all <em>n</em> elements to merge them. So intuitively, we can guess that this algorithm takes O(<em>n</em> log <em>n</em>) time.</p>
+</li>
+<li>
+<p>We can even look at the pseudocode to analyze running time:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>on input of n elements
+    if n &lt; 2
+        return
+    else
+        sort left half of elements
+        sort right half of elements
+        merge sorted halves</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>The first condition takes O(1) step to return, a constant number, so T(<em>n</em>) = O(1). The running time is O(1).</p>
+</li>
+<li>
+<p>But the second condition takes T(<em>n</em>) = T(<em>n</em>/2) + T(<em>n</em>/2) + O(<em>n</em>) since sorting each half requires the running time of each half, plus the time it takes to merge the two halves.</p>
+</li>
+<li>
+<p>Mathematically, this recurrence also comes out to O(<em>n</em> log <em>n</em>). But this would only be obvious if you&#8217;re familiar with this subject and had the help of a textbook; no worries if not!</p>
+</li>
+<li>
+<p>Let&#8217;s take a look at how this might be applied.</p>
+</li>
+<li>
+<p><code>sigma0.c</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include &lt;cs50.h&gt;</span>
+<span class="tok-cp">#include &lt;stdio.h&gt;</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">sigma</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">m</span><span class="tok-p">);</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-p">)</span>
+<span class="tok-p">{</span>
+    <span class="tok-kt">int</span> <span class="tok-n">n</span><span class="tok-p">;</span>
+    <span class="tok-k">do</span>
+    <span class="tok-p">{</span>
+        <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;Positive integer please: &quot;</span><span class="tok-p">);</span>
+        <span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-n">get_int</span><span class="tok-p">();</span>
+    <span class="tok-p">}</span>
+    <span class="tok-k">while</span> <span class="tok-p">(</span><span class="tok-n">n</span> <span class="tok-o">&lt;</span> <span class="tok-mi">1</span><span class="tok-p">);</span>
+
+    <span class="tok-kt">int</span> <span class="tok-n">answer</span> <span class="tok-o">=</span> <span class="tok-n">sigma</span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-p">);</span>
+
+    <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;%i</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">,</span> <span class="tok-n">answer</span><span class="tok-p">);</span>
+<span class="tok-p">}</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">sigma</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">m</span><span class="tok-p">)</span>
+<span class="tok-p">{</span>
+    <span class="tok-kt">int</span> <span class="tok-n">sum</span> <span class="tok-o">=</span> <span class="tok-mi">0</span><span class="tok-p">;</span>
+    <span class="tok-k">for</span> <span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">1</span><span class="tok-p">;</span> <span class="tok-n">i</span> <span class="tok-o">&lt;=</span> <span class="tok-n">m</span><span class="tok-p">;</span> <span class="tok-n">i</span><span class="tok-o">++</span><span class="tok-p">)</span>
+    <span class="tok-p">{</span>
+        <span class="tok-n">sum</span> <span class="tok-o">+=</span> <span class="tok-n">i</span><span class="tok-p">;</span>
+    <span class="tok-p">}</span>
+    <span class="tok-k">return</span> <span class="tok-n">sum</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This program takes some integer <code>m</code> as input, and adds up all the numbers from <code>1</code> to <code>m</code>, inclusive, with a loop.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A recursive version, <code>sigma1.c</code>, would look like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include &lt;cs50.h&gt;</span>
+<span class="tok-cp">#include &lt;stdio.h&gt;</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">sigma</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">m</span><span class="tok-p">);</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-p">)</span>
+<span class="tok-p">{</span>
+    <span class="tok-kt">int</span> <span class="tok-n">n</span><span class="tok-p">;</span>
+    <span class="tok-k">do</span>
+    <span class="tok-p">{</span>
+        <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;Positive integer please: &quot;</span><span class="tok-p">);</span>
+        <span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-n">get_int</span><span class="tok-p">();</span>
+    <span class="tok-p">}</span>
+    <span class="tok-k">while</span> <span class="tok-p">(</span><span class="tok-n">n</span> <span class="tok-o">&lt;</span> <span class="tok-mi">1</span><span class="tok-p">);</span>
+
+    <span class="tok-kt">int</span> <span class="tok-n">answer</span> <span class="tok-o">=</span> <span class="tok-n">sigma</span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-p">);</span>
+
+    <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;%i</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">,</span> <span class="tok-n">answer</span><span class="tok-p">);</span>
+<span class="tok-p">}</span>
+
+<span class="tok-kt">int</span> <span class="tok-nf">sigma</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">m</span><span class="tok-p">)</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">m</span> <span class="tok-o">&lt;=</span> <span class="tok-mi">0</span><span class="tok-p">)</span>
+    <span class="tok-p">{</span>
+        <span class="tok-k">return</span> <span class="tok-mi">0</span><span class="tok-p">;</span>
+    <span class="tok-p">}</span>
+    <span class="tok-k">else</span>
+    <span class="tok-p">{</span>
+        <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">m</span> <span class="tok-o">+</span> <span class="tok-n">sigma</span><span class="tok-p">(</span><span class="tok-n">m</span> <span class="tok-o">-</span> <span class="tok-mi">1</span><span class="tok-p">));</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The function <code>sigma</code> now calls itself, where it adds the current <code>m</code> to whatever the sum from <code>0</code> (because the function just returns <code>0</code> if <code>m</code> is <code>0</code> or less) to <code>m - 1</code>, and that gives us the sum from <code>0</code> to <code>m</code>.</p>
+</li>
+<li>
+<p>But having recursion, while it looks elegant, might not be the best decision if we have a large <code>m</code> and need to call the function over and over again, using up more memory that we would otherwise.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Soon we&#8217;ll take a look at fancier data structures, and how we might apply some of these concepts to working with them.</p>
 </li>
 </ul>
 </div>
