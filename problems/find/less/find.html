@@ -789,6 +789,14 @@ Makefile    find.c      generate.c  helpers.c   helpers.h</code></pre>
 <li>
 <p>The running time of your implementation must be in <em>O</em>(log <em>n</em>).</p>
 </li>
+<li>
+<p>You may not alter the function&#8217;s declaration. Its prototype must remain:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-kt">bool</span> <span class="tok-nf">search</span><span class="tok-p">(</span><span class="tok-kt">int</span> <span class="tok-n">value</span><span class="tok-p">,</span> <span class="tok-kt">int</span> <span class="tok-n">values</span><span class="tok-p">[],</span> <span class="tok-kt">int</span> <span class="tok-n">n</span><span class="tok-p">);</span></code></pre>
+</div>
+</div>
+</li>
 </ul>
 </div>
 </div>
@@ -956,6 +964,9 @@ echo $?</code></pre>
 <ul>
 <li>
 <p>Corrected "non-negative" to "non-positive."</p>
+</li>
+<li>
+<p>Clarified that the prototype of <code>search</code> cannot be alterered either.</p>
 </li>
 </ul>
 </div>
