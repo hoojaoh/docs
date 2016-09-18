@@ -418,6 +418,13 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#step-4-of-4">Step 4 of 4</a></li>
 </ul>
 </li>
+<li><a href="#faqs">FAQs</a>
+<ul class="sectlevel2">
+<li><a href="#command-not-found">command not found</a></li>
+<li><a href="#not-a-directory">Not a directory</a></li>
+<li><a href="#the-request-url-returned-error-403">The request URL returned error: 403</a></li>
+</ul>
+</li>
 </ul>
             </div>
         </div>
@@ -739,6 +746,88 @@ submit50 crack</code></pre>
 </div>
 <div class="paragraph">
 <p>This was Problem Set 2.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="faqs"><a class="link" href="#faqs">FAQs</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="command-not-found"><a class="link" href="#command-not-found">command not found</a></h3>
+<div class="paragraph">
+<p>If you execute, e.g.,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>submit50 initials</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and see</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>bash: submit50: command not found</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>odds are you haven&#8217;t run <code>update50</code> again, per Step 1 of 4. Do just re-run <code>update50</code>!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="not-a-directory"><a class="link" href="#not-a-directory">Not a directory</a></h3>
+<div class="paragraph">
+<p>If you execute, e.g.,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>cd ~/workspace/pset2/initials/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and see</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>bash: cd: /home/ubuntu/workspace/pset2/initials/: Not a directory</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>odds are you don&#8217;t have a <code>pset2/</code> directory inside of <code>~/workspace/</code> and/or you don&#8217;t have an <code>initials/</code> directory inside of <code>~/workspace/pset2/</code>. Check as much using <code>ls</code> (remember how?) or poke around your IDE&#8217;s file browser at left. Make sure that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>you have a <code>pset2/</code> directory inside of <code>~/workspace/</code>,</p>
+</li>
+<li>
+<p>you have an <code>initials/</code> directory inside of <code>~/workspace/initials/</code>, inside of which is <code>initials.c</code>,</p>
+</li>
+<li>
+<p>you have an <code>caesar/</code> directory inside of <code>~/workspace/caesar/</code>, inside of which is <code>caesar.c</code>,</p>
+</li>
+<li>
+<p>you have an <code>vigenere/</code> directory inside of <code>~/workspace/vigenere/</code>, inside of which is <code>vigenere.c</code>, and/or</p>
+</li>
+<li>
+<p>you have an <code>crack/</code> directory inside of <code>~/workspace/crack/</code>, inside of which is <code>crack.c</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="the-request-url-returned-error-403"><a class="link" href="#the-request-url-returned-error-403">The request URL returned error: 403</a></h3>
+<div class="paragraph">
+<p>If you see</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>fatal: unable to access https://username@github.com/submit50/username/': The request URL returned error: 403</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>when running <code>submit50</code>, where <code>username</code> is your own GitHub username, odds are you haven&#8217;t confirmed your email address with GitHub. Visit <a href="https://github.com/settings/emails" class="bare">https://github.com/settings/emails</a> to confirm it, then re-run <code>submit50</code>!</p>
 </div>
 </div>
 </div>
