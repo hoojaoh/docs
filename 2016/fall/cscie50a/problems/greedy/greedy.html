@@ -629,7 +629,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <p>It turns out that this greedy approach (i.e., algorithm) is not only locally optimal but also globally so for the United States dollar (and also the Euro). That is, so long as a cashier has enough of each coin, this largest-to-smallest approach will yield the fewest coins possible.</p>
 </div>
 <div class="paragraph">
-<p>How few? Well, you tell us. Write, in a file called <code>greedy.c</code> in your <code>~/workspace/week3</code> directory, a program that first asks the user how much change is owed and then spits out the minimum number of coins with which said change can be made. Use <code>GetFloat</code> from the CS50 Library to get the user&#8217;s input and <code>printf</code> from the Standard I/O library to output your answer. Assume that the only coins available are quarters (25¢), dimes (10¢), nickels (5¢), and pennies (1¢).</p>
+<p>How few? Well, you tell us. Write, in a file called <code>greedy.c</code> in your <code>~/workspace/week3</code> directory, a program that first asks the user how much change is owed and then spits out the minimum number of coins with which said change can be made. Use <code>get_float</code> from the CS50 Library to get the user&#8217;s input and <code>printf</code> from the Standard I/O library to output your answer. Assume that the only coins available are quarters (25¢), dimes (10¢), nickels (5¢), and pennies (1¢).</p>
 </div>
 <div class="paragraph">
 <p>We ask that you use <code>get_float</code> so that you can handle dollars and cents, albeit sans dollar sign. In other words, if some customer is owed $9.75 (as in the case where a newspaper costs 25¢ but the customer pays with a $10 bill), assume that your program&#8217;s input will be <code>9.75</code> and not <code>$9.75</code> or <code>975</code>. However, if some customer is owed $9 exactly, assume that your program&#8217;s input will be <code>9.00</code> or just <code>9</code> but, again, not <code>$9</code> or <code>900</code>. Of course, by nature of floating-point values, your program will likely work with inputs like <code>9.0</code> and <code>9.000</code> as well; you need not worry about checking whether the user&#8217;s input is "formatted" like money should be. And you need not try to check whether a user&#8217;s input is too large to fit in a <code>float</code>. But you should check that the user&#8217;s input makes cents! Er, sense. Using <code>get_float</code> alone will ensure that the user&#8217;s input is indeed a floating-point (or integral) value but not that it is non-negative. If the user fails to provide a non-negative value, your program should re-prompt the user for a valid amount again and again until the user complies.</p>
@@ -651,7 +651,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="videoblock">
 <div class="content">
-<iframe width="960" height="540" src="https://www.youtube.com/embed/9dZzyl7dCuw?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="960" height="540" src="https://www.youtube.com/embed/6w7Tws0seJk?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
 <div class="paragraph">
