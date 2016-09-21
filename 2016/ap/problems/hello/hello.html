@@ -465,7 +465,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <p>Pages 1 – 7, 9, and 10 of <a href="http://www.howstuffworks.com/c.htm" class="bare">http://www.howstuffworks.com/c.htm</a>.</p>
 </li>
 <li>
-<p>Chapters 1 – 5, 9, and 11 &#8211; 17 of <em>Absolute Beginner&#8217;s Guide to C</em>.</p>
+<p>Chapters 1 – 5, 9, and 11 – 17 of <em>Absolute Beginner&#8217;s Guide to C</em>.</p>
 </li>
 <li>
 <p>Chapters 1 – 6 of <em>Programming in C</em>.</p>
@@ -636,14 +636,11 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <div class="sect2">
 <h3 id="updating"><a class="link" href="#updating">Updating</a></h3>
 <div class="paragraph">
-<p>Once you&#8217;ve got your CS50 IDE instance open in a browser window, have a look over the README file we&#8217;ve included with it. It includes some basics about using your new workspace. Don&#8217;t worry too much about references to "problem sets" or other terminology or things you haven&#8217;t seen before&#8212;&#8203;CS50 IDE is neutrally configured for use with different versions of the CS50 course that won&#8217;t be applicable for your progress through CS50 AP.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s now make sure that you have the most up-to-date version of CS50 IDE. To do so, click in the <strong>terminal window</strong> (which probably has a tab that looks something like <strong>workspace/ - ""</strong>) at the bottom of the screen, where by default you should see a <strong>prompt</strong> which reads:</p>
+<p>Let&#8217;s now make sure that you have the most up-to-date version of CS50 IDE. To do so, click in the <strong>terminal window</strong> (which probably has a tab that looks something like <strong>workspace/</strong>) at the bottom of the screen, where by default you should see a <strong>prompt</strong> which reads:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">~/workspace <span class="tok-err">$</span></code></pre>
+<pre class="pygments highlight"><code>~/workspace/ $</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -651,7 +648,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">update50</code></pre>
+<pre class="pygments highlight"><code>update50</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -659,18 +656,18 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>All done! &lt;3
-Update complete!</code></pre>
+<pre class="pygments highlight"><code>Update complete!
+BE SURE TO CLOSE AND RE-OPEN ANY TERMINAL WINDOWS &lt;3</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>after which you are free to continue exploring CS50 IDE. As of the time we&#8217;re writing this specification, the current version of CS50 IDE is <strong>62</strong>. That&#8217;s the number you should see near the top-right corner of your screen. You can always check the version number of your IDE, also, by typing <code>version50</code> in the Terminal.</p>
+<p>after which you are free to continue exploring CS50 IDE.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="navigating-cs50-ide"><a class="link" href="#navigating-cs50-ide">Navigating CS50 IDE</a></h3>
 <div class="paragraph">
-<p>Okay, let&#8217;s create a folder (otherwise known as a <strong>directory</strong>) in which your code for this problem will soon live. On the left side of the screen you should see a file tree listing the current contents of your CS50 IDE workspace (right now it should simply be a folder entitled <code>~/workspace</code>). Right-click in the blank space underneath that folder and select <strong>New Folder</strong> near the bottom of the context menu that pops up. This should create, as expected, a new folder for you entitled <strong>New Folder</strong> which you can rename now to <code>chapter1</code>. If you accidentally leave it named <code>New Folder</code>, simply right click on the folder, choose <strong>Rename</strong> from the context menu, and rename it.</p>
+<p>Okay, let&#8217;s create a folder (otherwise known as a <strong>directory</strong>) in which your code for this problem will soon live. On the left side of the screen you should see a file tree listing the current contents of your CS50 IDE workspace (right now it should simply be a folder entitled <code>~/workspace/</code>). Right-click in the blank space underneath that folder and select <strong>New Folder</strong> near the bottom of the context menu that pops up. This should create, as expected, a new folder for you entitled <strong>New Folder</strong> which you can rename now to <code>chapter1</code>. If you accidentally leave it named <code>New Folder</code>, simply right click on the folder, choose <strong>Rename</strong> from the context menu, and rename it.</p>
 </div>
 <div class="paragraph">
 <p>Front and center in the CS50 IDE workspace is a window wherein you&#8217;ll be able to write your code, using Ace, a web-based text editor. Right now, assuming you haven&#8217;t played around with the tabs, that window is blank.</p>
@@ -689,18 +686,18 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">~/workspace <span class="tok-err">$</span></code></pre>
+<pre class="pygments highlight"><code>~/workspace/ $</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>(where <code>~/workspace</code> &ndash; i.e., inside a folder called <code>workspace</code> which is itself inside your home directory, the shorthand for which is <code>~</code> &ndash; is the directory you are currently in.) If that&#8217;s the case, based on the file tree should be a <code>chapter1</code> directory somewhere inside, since we created it just a few moments ago. Let&#8217;s confirm as much.</p>
+<p>(where <code>~/workspace/</code>—i.e., inside a folder called <code>workspace</code> which is itself inside your home directory, the shorthand for which is <code>~</code>—is the directory you are currently in.) If that&#8217;s the case, based on the file tree should be a <code>chapter1</code> directory somewhere inside, since we created it just a few moments ago. Let&#8217;s confirm as much.</p>
 </div>
 <div class="paragraph">
 <p>Click somewhere inside of that terminal window and type</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">ls</code></pre>
+<pre class="pygments highlight"><code>ls</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -708,7 +705,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd </span>chapter1</code></pre>
+<pre class="pygments highlight"><code>cd chapter1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -716,23 +713,23 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> ~/workspace/chapter1</code></pre>
+<pre class="pygments highlight"><code>cd ~/workspace/chapter1/</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>followed by Enter to <span class="underline">c</span>hange your <span class="underline">d</span>irectory to <code>~/workspace/chapter1</code> (ergo, <code>cd</code>). You should find that your prompt changes to</p>
+<p>followed by Enter to <span class="underline">c</span>hange your <span class="underline">d</span>irectory to <code>~/workspace/chapter1/</code> (ergo, <code>cd</code>). You should find that your prompt changes to</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">~/workspace/chapter1/ <span class="tok-err">$</span></code></pre>
+<pre class="pygments highlight"><code>~/workspace/chapter1/ $</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>confirming that you are indeed now inside of <code>~/workspace/chapter1</code> (i.e., a directory called <code>chapter1</code> inside of a directory called <code>workspace</code> inside of your home directory). Now type</p>
+<p>confirming that you are indeed now inside of <code>~/workspace/chapter1/</code> (i.e., a directory called <code>chapter1</code> inside of a directory called <code>workspace</code> inside of your home directory). Now type</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">ls</code></pre>
+<pre class="pygments highlight"><code>ls</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -743,27 +740,22 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span></code></pre>
+<pre class="pygments highlight"><code>cd</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and then Enter. It turns out that if you don&#8217;t provide <code>cd</code> with a "command-line argument" (i.e., a directory&#8217;s name), it whisks you back to your home directory by default. But remember that everything lives inside of <code>~/workspace</code>&#8230;&#8203; so we need to get back there! Just:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd </span>workspace</code></pre>
-</div>
+<p>and then Enter. It turns out that if you don&#8217;t provide <code>cd</code> with a "command-line argument" (i.e., a directory&#8217;s name), it whisks you back to the <code>~/workspace/</code> directory by default.</p>
 </div>
 <div class="paragraph">
 <p>And indeed, your prompt should now be:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">~/workspace <span class="tok-err">$</span></code></pre>
+<pre class="pygments highlight"><code>~/workspace/ $</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Phew, home sweet home. Remember that everything we create in the CS50 IDE will ultimately live inside of <code>workspace</code>.</p>
+<p>Phew, home sweet home. Remember that everything we create in the CS50 IDE will ultimately live inside of <code>~/workspace/</code>.</p>
 </div>
 <div class="paragraph">
 <p>Make sense? If not, no worries; it soon will! It&#8217;s in this terminal window that you&#8217;ll soon be compiling your first program! For now, though, close Ace by clicking the small "x" in the tab for <code>hello.txt</code> (if you&#8217;ve made additional changes, you&#8217;ll be asked if you want to save your file before the tab closes).</p>
@@ -787,7 +779,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> ~/workspace/chapter1</code></pre>
+<pre class="pygments highlight"><code>cd ~/workspace/chapter1/</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -795,7 +787,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">touch hello.c</code></pre>
+<pre class="pygments highlight"><code>touch hello.c</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -818,11 +810,11 @@ Update complete!</code></pre>
 <p>Do be sure that you type in this program just right, else you&#8217;re about to experience your first bug! In particular, capitalization matters, so don&#8217;t accidentally capitalize words (unless they&#8217;re between those two quotes). And don&#8217;t overlook that one semicolon. C is quite nitpicky!</p>
 </div>
 <div class="paragraph">
-<p>When done typing, select <strong>File &gt; Save</strong> (or hit ctrl-s), but don&#8217;t close the tab. Recall that the leading asterisk in the tab&#8217;s name should then disappear. Click anywhere in the terminal window beneath your code. The prompt itself should now be</p>
+<p>When done typing, select <strong>File &gt; Save</strong> (or hit ctrl-s), but don&#8217;t close the tab. Recall that the red dot atop the tab should then disappear. Click anywhere in the terminal window beneath your code. The prompt itself should now be</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">~/workspace/chapter1 <span class="tok-err">$</span></code></pre>
+<pre class="pygments highlight"><code>~/workspace/chapter1/ $</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -830,7 +822,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">ls</code></pre>
+<pre class="pygments highlight"><code>ls</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -841,7 +833,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">make hello</code></pre>
+<pre class="pygments highlight"><code>make hello</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -849,7 +841,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">clang -ggdb3 -O0 -std<span class="tok-o">=</span>c99 -Wall -Werror   hello.c  -lcs50 -lm -o hello</code></pre>
+<pre class="pygments highlight"><code>clang -ggdb3 -O0 -std=c99 -Wall -Werror   hello.c  -lcs50 -lm -o hello</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -857,7 +849,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">./hello</code></pre>
+<pre class="pygments highlight"><code>./hello</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -865,7 +857,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">ls</code></pre>
+<pre class="pygments highlight"><code>ls</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -876,15 +868,15 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">make hello</code></pre>
+<pre class="pygments highlight"><code>make hello</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>at your prompt, followed by Enter. (Just be sure that you are inside of <code>~/workspace/chapter1</code> within your terminal window, as your prompt will confirm or deny.) If you see no more errors, try running your program by typing</p>
+<p>at your prompt, followed by Enter. (Just be sure that you are inside of <code>~/workspace/chapter1/</code> within your terminal window, as your prompt will confirm or deny.) If you see no more errors, try running your program by typing</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">./hello</code></pre>
+<pre class="pygments highlight"><code>./hello</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -892,7 +884,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">hello, world</code></pre>
+<pre class="pygments highlight"><code>hello, world</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -910,14 +902,14 @@ Update complete!</code></pre>
 <p>Now let&#8217;s see if the program you just wrote is correct! Included in the CS50 IDE is <code>check50</code>, a command-line program with which you can check the correctness of (some of) your programs.</p>
 </div>
 <div class="paragraph">
-<p>If not already there, navigate your way to <code>~/workspace/chapter1</code> (Remember how?)</p>
+<p>If not already there, navigate your way to <code>~/workspace/chapter1/</code> (Remember how?)</p>
 </div>
 <div class="paragraph">
 <p>If you then execute</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">ls</code></pre>
+<pre class="pygments highlight"><code>ls</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -925,7 +917,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">mv <span class="tok-nb">source </span>destination</code></pre>
+<pre class="pygments highlight"><code>mv source destination</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -933,7 +925,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">mv Hello.c hello.c</code></pre>
+<pre class="pygments highlight"><code>mv Hello.c hello.c</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -941,7 +933,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">check50 1617.chapter1.hello hello.c</code></pre>
+<pre class="pygments highlight"><code>check50 1617.chapter1.hello hello.c</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1000,7 +992,7 @@ Update complete!</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash">style50 hello.c</code></pre>
+<pre class="pygments highlight"><code>style50 hello.c</code></pre>
 </div>
 </div>
 <div class="paragraph">
