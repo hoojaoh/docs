@@ -459,7 +459,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
             }
 
         </style>
-        <title>Resize</title>
+        <title>Recover</title>
     </head>
     <body class="toc2 toc-left">
         <div id="header">
@@ -476,30 +476,29 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#specification">Specification</a></li>
 <li><a href="#walkthrough">Walkthrough</a></li>
 <li><a href="#usage">Usage</a></li>
-<li><a href="#hints">Hints</a></li>
 <li><a href="#testing">Testing</a>
 <ul class="sectlevel2">
 <li><a href="#code-check50-code"><code>check50</code></a></li>
 </ul>
 </li>
 <li><a href="#staff-s-solution">Staff&#8217;s Solution</a></li>
-<li><a href="#recover">recover</a></li>
-<li><a href="#sanity-checks">Sanity Checks</a></li>
-<li><a href="#fabulous-prizes">Fabulous Prizes</a></li>
+<li><a href="#hints">Hints</a></li>
+<li><a href="#faqs">FAQs</a></li>
+<li><a href="#changelog">Changelog</a></li>
 </ul>
             </div>
         </div>
         <div id="content">
-            <h1>Resize</h1>
+            <h1>Recover</h1>
 <div class="sect1">
 <h2 id="tl-dr"><a class="link" href="#tl-dr">tl;dr</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program that enlarges BMPs, per the below.</p>
+<p>Implement a program that recovers JPEGs from a forensic image, per the below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>$ <span class="underline">./resize small.bmp large.bmp</span></code></pre>
+<pre class="pygments highlight"><code>$ <span class="underline">./recover card.raw</span></code></pre>
 </div>
 </div>
 </div>
@@ -508,7 +507,33 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <h2 id="background"><a class="link" href="#background">Background</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Be sure you&#8217;re familiar with the structure of 24-bit uncompressed BMPs, as introduced in <a href="../../whodunit/whodunit">Whodunit</a>.</p>
+<p>In anticipation of this problem, I spent the past several days taking photos of people I know, all of which were saved by my digital camera as JPEGs on a memory card. (Okay, it&#8217;s possible I actually spent the past several days on Facebook instead.) Unfortunately, I somehow deleted them all! Thankfully, in the computer world, "deleted" tends not to mean "deleted" so much as "forgotten." My computer insists that the card is now blank, but I&#8217;m pretty sure that&#8217;s not quite true. Indeed, I&#8217;m hoping you can write a program that recovers the photos for me!</p>
+</div>
+<div class="paragraph">
+<p>Even though JPEGs are more complicated than BMPs, JPEGs have "signatures," patterns of bytes that can distinguish them from other file formats. Specifically, the first three bytes of JPEGs are</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>0xff 0xd8 0xff</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>from first byte to third byte, left to right. The fourth byte, meanwhile, is either <code>0xe0</code>, <code>0xe1</code>, <code>0xe2</code>, <code>0xe3</code>, <code>0xe4</code>, <code>0xe5</code>, <code>0xe6</code>, <code>0xe7</code>, <code>0xe8</code>, <code>0xe8</code>, <code>0xe9</code>, <code>0xea</code>, <code>0xeb</code>, <code>0xec</code>, <code>0xed</code>, <code>0xee</code>, of <code>0xef</code>. Put another way, the fourth byte&#8217;s first four bits are <code>1110</code>.</p>
+</div>
+<div class="paragraph">
+<p>Odds are, if you find this pattern of four bytes on media known to store photos (e.g., my memory card), they demarcate the start of a JPEG. To be fair, you might encounter these patterns on some disk purely by chance, so data recovery isn&#8217;t an exact science.</p>
+</div>
+<div class="paragraph">
+<p>Fortunately, digital cameras tend to store photographs contiguously on memory cards, whereby each photo is stored immediately after the previously taken photo. Accordingly, the start of a JPEG usually demarks the end of another. However, digital cameras often initialize cards with a FAT file system whose "block size" is 512 bytes (B). The implication is that these cameras only write to those cards in units of 512 B. A photo that&#8217;s 1 MB (i.e., 1,048,576 B) thus takes up 1048576 ÷ 512 = 2048 "blocks" on a memory card. But so does a photo that&#8217;s, say, one byte smaller (i.e., 1,048,575 B)! The wasted space on disk is called "slack space." Forensic investigators often look at slack space for remnants of suspicious data.</p>
+</div>
+<div class="paragraph">
+<p>The implication of all these details is that you, the investigator, can probably write a program that iterates over a copy of my memory card, looking for JPEGs' signatures. Each time you find a signature, you can open a new file for writing and start filling that file with bytes from my memory card, closing that file only once you encounter another signature. Moreover, rather than read my memory card&#8217;s bytes one at a time, you can read 512 of them at a time into a buffer for efficiency&#8217;s sake. Thanks to FAT, you can trust that JPEGs' signatures will be "block-aligned." That is, you need only look for those signatures in a block&#8217;s first four bytes.</p>
+</div>
+<div class="paragraph">
+<p>Realize, of course, that JPEGs can span contiguous blocks. Otherwise, no JPEG could be larger than 512 B. But the last byte of a JPEG might not fall at the very end of a block. Recall the possibility of slack space. But not to worry. Because this memory card was brand-new when I started snapping photos, odds are it&#8217;d been "zeroed" (i.e., filled with 0s) by the manufacturer, in which case any slack space will be filled with 0s. It&#8217;s okay if those trailing 0s end up in the JPEGs you recover; they should still be viewable.</p>
+</div>
+<div class="paragraph">
+<p>Now, I only have one memory card, but there are a lot of you! And so I&#8217;ve gone ahead and created a "forensic image" of the card, storing its contents, byte after byte, in a file called <code>card.raw</code>. So that you don&#8217;t waste time iterating over millions of 0s unnecessarily, I&#8217;ve only imaged the first few megabytes of the memory card. But you should ultimately find that the image contains 50 JPEGs.</p>
 </div>
 </div>
 </div>
@@ -519,13 +544,11 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <h3 id="downloading"><a class="link" href="#downloading">Downloading</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>$ wget https://github.com/cs50/problems/archive/resize.zip
-$ unzip resize.zip
-$ rm resize.zip
-$ mv problems-resize resize
-$ cd resize
+<pre class="pygments highlight"><code>$ mkdir recover
+$ cd recover
+$ wget http://cdn.cs50.net/2016/fall/psets/4/card.raw
 $ ls
-TODO</code></pre>
+card.raw</code></pre>
 </div>
 </div>
 </div>
@@ -535,35 +558,19 @@ TODO</code></pre>
 <h2 id="specification"><a class="link" href="#specification">Specification</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program called <code>resize</code> that enlarges 24-bit uncompressed BMPs by a factor of <code>n</code>.</p>
+<p>Implement a program called <code>recover</code> that recovers JPEGs from a forensic image.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Implement your program in a file called <code>resize.c</code> in a directory called <code>resize</code>.</p>
+<p>Implement your program in a file called <code>recover.c</code> in a directory called <code>recover</code>.</p>
 </li>
 <li>
-<p>Your program should accept exactly three command-line arguments, whereby</p>
-<div class="openblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>the first (<code>n</code>) must be a positive integer less than or equal to <code>100</code>,</p>
+<p>Your program should accept exactly one command-line argument, the name of a forensic image from which to recover JPEGs.
++ If your program is not executed with exactly one command-line argument, it should remind the user of correct usage, as with <code>fprintf</code>, and <code>main</code> should return <code>1</code>.</p>
 </li>
 <li>
-<p>the second must be the name of a BMP to be resized, and</p>
-</li>
-<li>
-<p>the third must be the name of the resized version to be written.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>+ If it is not, it should remind the user of correct usage, as with <code>fprintf</code>, and <code>main</code> should return <code>1</code>.</p>
-</div>
+<p>If the forensic image cannot be opened for reading, your program should inform the user as much, as with <code>fprintf</code>, and <code>main</code> should return <code>2</code>.</p>
 </li>
 <li>
 <p>Your program, if it uses <code>malloc</code>, must not leak any memory.</p>
@@ -577,7 +584,7 @@ TODO</code></pre>
 <div class="sectionbody">
 <div class="videoblock">
 <div class="content">
-<iframe src="https://www.youtube.com/embed/e7WtAQDk904?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/6yDyPrZMJBQ?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
 </div>
@@ -590,15 +597,15 @@ TODO</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>$ <span class="underline">./resize</span>
-Usage: ./resize n infile outfile
+<pre class="pygments highlight"><code>$ <span class="underline">./recover</span>
+Usage: ./resize image
 $ echo $?
 1</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>$ <span class="underline">./resize 2 small.bmp larger.bmp</span>
+<pre class="pygments highlight"><code>$ <span class="underline">./recover card.raw</span>
 $ echo $?
 0</code></pre>
 </div>
@@ -606,50 +613,13 @@ $ echo $?
 </div>
 </div>
 <div class="sect1">
-<h2 id="hints"><a class="link" href="#hints">Hints</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>With a program like this, we could have created <code>large.bmp</code> out of <code>small.bmp</code> by resizing the latter by a factor of 4 (i.e., by multiplying both its width and its height by 4), per the below.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>./resize 4 small.bmp large.bmp</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You&#8217;re welcome to get started by copying (yet again) <code>copy.c</code> and naming the copy <code>resize.c</code>. But spend some time thinking about what it means to resize a BMP. (You may assume that <code>n</code> times the size of <code>infile</code> will not exceed 2<sup>32</sup> - 1.) Decide which of the fields in <code>BITMAPFILEHEADER</code> and <code>BITMAPINFOHEADER</code> you might need to modify. Consider whether or not you&#8217;ll need to add or subtract padding to scanlines. And do be sure to support a value of <code>1</code> for <code>n</code>, the result of which should be an <code>outfile</code> with dimensions identical to <code>infile</code>'s.</p>
-</div>
-<div class="paragraph">
-<p>If you happen to use <code>malloc</code>, be sure to use <code>free</code> so as not to leak memory. Try using <code>valgrind</code> to check for any leaks!</p>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="testing"><a class="link" href="#testing">Testing</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>If you&#8217;d like to peek at, e.g., <code>large.bmp</code>'s headers (in a more user-friendly way than <code>xxd</code> allows), you may execute the below.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>~cs50/pset4/peek large.bmp</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Better yet, if you&#8217;d like to compare your outfile&#8217;s headers against those from the <a href="#staffs-solution">staff&#8217;s solution</a>, you might want to execute commands like the below while inside your <code>~/workspace/pset4/bmp</code> directory. (Think about what each is doing.)</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>./resize 4 small.bmp student.bmp
-~cs50/pset4/resize 4 small.bmp staff.bmp
-~cs50/pset4/peek student.bmp staff.bmp</code></pre>
-</div>
-</div>
 <div class="sect2">
 <h3 id="code-check50-code"><a class="link" href="#code-check50-code"><code>check50</code></a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>check50 2016.resize.less bmp.h resize.c</code></pre>
+<pre class="pygments highlight"><code>check50 2016.recover recover.c</code></pre>
 </div>
 </div>
 </div>
@@ -658,61 +628,27 @@ $ echo $?
 <div class="sect1">
 <h2 id="staff-s-solution"><a class="link" href="#staff-s-solution">Staff&#8217;s Solution</a></h2>
 <div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>~cs50/pset4/resize</code></pre>
-</div>
+<div class="paragraph">
+<p>Afraid having the staff&#8217;s solution would spoil the challenge!</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="recover"><a class="link" href="#recover">recover</a></h2>
+<h2 id="hints"><a class="link" href="#hints">Hints</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Alright, now let&#8217;s put all your new skills to the test.</p>
+<p>Odds are you&#8217;ll want to start by creating a file called <code>recover.c</code> (in the same directory as is <code>card.raw</code>). No need for the CS50 Library, but you will want to declare <code>main</code> in such a way that it supports command-line arguments. (Remember how?)</p>
 </div>
 <div class="paragraph">
-<p>In anticipation of this problem set, I spent the past several days snapping photos of people I know, all of which were saved by my digital camera as JPEGs on a 1GB CompactFlash (CF) card. (It&#8217;s possible I actually spent the past several days on Facebook instead.) Unfortunately, I&#8217;m not very good with computers, and I somehow deleted them all! Thankfully, in the computer world, "deleted" tends not to mean "deleted" so much as "forgotten." My computer insists that the CF card is now blank, but I&#8217;m pretty sure it&#8217;s lying to me.</p>
-</div>
-<div class="paragraph">
-<p>Write in <code>~/workspace/pset4/jpg/recover.c</code> a program that recovers these photos.</p>
-</div>
-<div class="paragraph">
-<p>Ummm.</p>
-</div>
-<div class="paragraph">
-<p>Okay, here&#8217;s the thing. Even though JPEGs are more complicated than BMPs, JPEGs have "signatures," patterns of bytes that can distinguish them from other file formats. Specifically, the first three bytes of JPEGs are</p>
+<p>Keep in mind that you can open <code>card.raw</code> programmatically with <code>fopen</code>, as with the below, provided <code>argv[1]</code> exists.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>0xff 0xd8 0xff</code></pre>
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-kt">FILE</span> <span class="tok-o">*</span><span class="tok-n">file</span> <span class="tok-o">=</span> <span class="tok-n">fopen</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">],</span> <span class="tok-s">&quot;r&quot;</span><span class="tok-p">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>from first byte to third byte, left to right. The fourth byte, meanwhile, is either <code>0xe0</code>, <code>0xe1</code>, <code>0xe2</code>, <code>0xe3</code>, <code>0xe4</code>, <code>0xe5</code>, <code>0xe6</code>, <code>0xe7</code>, <code>0xe8</code>, <code>0xe8</code>, <code>0xe9</code>, <code>0xea</code>, <code>0xeb</code>, <code>0xec</code>, <code>0xed</code>, <code>0xee</code>, of <code>0xef</code>. Put another way, the fourth byte&#8217;s first four bits are <code>1110</code>.</p>
-</div>
-<div class="paragraph">
-<p>Odds are, if you find this pattern of four bytes on a disk known to store photos (e.g., my CF card), they demark the start of a JPEG. (To be sure, you might encounter these patterns on some disk purely by chance, so data recovery isn&#8217;t an exact science.)</p>
-</div>
-<div class="paragraph">
-<p>Fortunately, digital cameras tend to store photographs contiguously on CF cards, whereby each photo is stored immediately after the previously taken photo. Accordingly, the start of a JPEG usually demarks the end of another. However, digital cameras generally initialize CF cards with a FAT file system whose "block size" is 512 bytes (B). The implication is that these cameras only write to those cards in units of 512 B. A photo that&#8217;s 1 MB (i.e., 1,048,576 B) thus takes up 1048576 ÷ 512 = 2048 "blocks" on a CF card. But so does a photo that&#8217;s, say, one byte smaller (i.e., 1,048,575 B)! The wasted space on disk is called "slack space." Forensic investigators often look at slack space for remnants of suspicious data.</p>
-</div>
-<div class="paragraph">
-<p>The implication of all these details is that you, the investigator, can probably write a program that iterates over a copy of my CF card, looking for JPEGs' signatures. Each time you find a signature, you can open a new file for writing and start filling that file with bytes from my CF card, closing that file only once you encounter another signature. Moreover, rather than read my CF card&#8217;s bytes one at a time, you can read 512 of them at a time into a buffer for efficiency&#8217;s sake. Thanks to FAT, you can trust that JPEGs' signatures will be "block-aligned." That is, you need only look for those signatures in a block&#8217;s first four bytes.</p>
-</div>
-<div class="paragraph">
-<p>Realize, of course, that JPEGs can span contiguous blocks. Otherwise, no JPEG could be larger than 512 B. But the last byte of a JPEG might not fall at the very end of a block. Recall the possibility of slack space. But not to worry. Because this CF card was brand-new when I started snapping photos, odds are it&#8217;d been "zeroed" (i.e., filled with 0s) by the manufacturer, in which case any slack space will be filled with 0s. It&#8217;s okay if those trailing 0s end up in the JPEGs you recover; they should still be viewable.</p>
-</div>
-<div class="paragraph">
-<p>Now, I only have one CF card, but there are a whole lot of you! And so I&#8217;ve gone ahead and created a "forensic image" of the card, storing its contents, byte after byte, in a file called <code>card.raw</code>. So that you don&#8217;t waste time iterating over millions of 0s unnecessarily, I&#8217;ve only imaged the first few megabytes of the CF card. But you should ultimately find that the image contains 50 JPEGs. As usual, you can open the file programmatically with <code>fopen</code>, as in the below.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="c"><span class="tok-kt">FILE</span><span class="tok-o">*</span> <span class="tok-n">file</span> <span class="tok-o">=</span> <span class="tok-n">fopen</span><span class="tok-p">(</span><span class="tok-s">&quot;card.raw&quot;</span><span class="tok-p">,</span> <span class="tok-s">&quot;r&quot;</span><span class="tok-p">);</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Notice, incidentally, that <code>~/workspace/pset4/jpg</code> contains only <code>recover.c</code>, but it&#8217;s devoid of any code. (We leave it to you to decide how to implement and compile <code>recover</code>!) For simplicity, you should hard-code <code>"card.raw"</code> in your program; your program need not accept any command-line arguments. When executed, though, your program should recover every one of the JPEGs from <code>card.raw</code>, storing each as a separate file in your current working directory. Your program should number the files it outputs by naming each <code>###.jpg</code>, where <code>###</code> is three-digit decimal number from <code>000</code> on up. (Befriend <code>sprintf</code>.) You need not try to recover the JPEGs' original names. To check whether the JPEGs your program spit out are correct, simply double-click and take a look! If each photo appears intact, your operation was likely a success!</p>
+<p>When executed, your program should recover every one of the JPEGs from <code>card.raw</code>, storing each as a separate file in your current working directory. Your program should number the files it outputs by naming each <code>###.jpg</code>, where <code>###</code> is three-digit decimal number from <code>000</code> on up. (Befriend <a href="https://reference.cs50.net/stdio/sprintf"><code>sprintf</code></a>.) You need not try to recover the JPEGs' original names. To check whether the JPEGs your program spit out are correct, simply double-click and take a look! If each photo appears intact, your operation was likely a success!</p>
 </div>
 <div class="paragraph">
 <p>Odds are, though, the JPEGs that the first draft of your code spits out won&#8217;t be correct. (If you open them up and don&#8217;t see anything, they&#8217;re probably not correct!) Execute the command below to delete all JPEGs in your current working directory.</p>
@@ -733,90 +669,32 @@ $ echo $?
 <div class="paragraph">
 <p>Just be careful with that <code>-f</code> switch, as it "forces" deletion without prompting you.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="faqs"><a class="link" href="#faqs">FAQs</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>If you&#8217;d like to check the correctness of your program with <code>check50</code>, you may execute the below.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code>check50 2015.fall.pset4.recover recover.c</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Lest it spoil your (forensic) fun, the staff&#8217;s solution to <code>recover</code> is not available.</p>
-</div>
-<div class="paragraph">
-<p>As before, if you happen to use <code>malloc</code>, be sure to use <code>free</code> so as not to leak memory. Try using <code>valgrind</code> to check for any leaks!</p>
-</div>
-<div class="paragraph">
-<p>Here&#8217;s Zamyla!</p>
-</div>
-<div class="videoblock">
-<div class="content">
-<iframe width="960" height="540" src="https://www.youtube.com/embed/Y4vV61lbL3g?rel=0" frameborder="0" allowfullscreen></iframe>
-</div>
+<p><em>None so far! Reload this page periodically to check if any arise!</em></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sanity-checks"><a class="link" href="#sanity-checks">Sanity Checks</a></h2>
+<h2 id="changelog"><a class="link" href="#changelog">Changelog</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Before you consider this problem set done, best to ask yourself these questions and then go back and improve your code as needed! Do not consider the below an exhaustive list of expectations, though, just some helpful reminders. The checkboxes that have come before these represent the exhaustive list! To be clear, consider the questions below rhetorical. No need to answer them in writing for us, since all of your answers should be "yes!"</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Did you fill <code>questions.txt</code> with answers to all questions?</p>
-</li>
+<p>2016-09-23</p>
+<div class="ulist">
+<ul>
 <li>
-<p>Is the BMP that <code>whodunit</code> outputs legible (to you)?</p>
-</li>
-<li>
-<p>Does <code>resize</code> accept three and only three command-line arguments?</p>
-</li>
-<li>
-<p>Does <code>resize</code> ensure that <code>n</code> is in [1, 100]?</p>
-</li>
-<li>
-<p>Does <code>resize</code> update <code>bfSize</code>, <code>biHeight</code>, <code>biSizeImage</code>, and <code>biWidth</code> correctly?</p>
-</li>
-<li>
-<p>Does <code>resize</code> add or remove padding as needed?</p>
-</li>
-<li>
-<p>Are you sure that <code>resize</code> doesn&#8217;t have any memory leaks?</p>
-</li>
-<li>
-<p>Does <code>recover</code> output 50 JPEGs? Are all 50 viewable?</p>
-</li>
-<li>
-<p>Does <code>recover</code> name the JPEGs <code>###.jpg</code>, where <code>###</code> is a three-digit number from <code>000</code> through <code>049</code>?</p>
-</li>
-<li>
-<p>Are you sure that <code>recover</code> doesn&#8217;t have any memory leaks?</p>
-</li>
-<li>
-<p>Are all of your files where they should be in <code>~/workspace/pset4</code>?</p>
+<p>Initial release.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>As always, if you can&#8217;t answer "yes" to one or more of the above because you&#8217;re having some trouble, do drop by office hours or turn to <a href="https://cs50.net/discuss">CS50 Discuss</a>!</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="fabulous-prizes"><a class="link" href="#fabulous-prizes">Fabulous Prizes</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>And now the real fun begins. You are hereby challenged to find as many of the computer scientists featured in these photos as possible. To prove that you found someone, take a photo of yourself posing (anywhere) with the computer scientist (in such a way that he or she is aware of the photo and not just in the background). If a photo contains multiple computer scientists, you&#8217;re welcome to pose with each of them separately. Upload your photos (i.e., the photos you took, not the ones that you
-recovered) to a non-private album somewhere that supports bulk downloads (e.g., workspace, Imgur, etc.), then email your album&#8217;s URL to <a href="mailto:selfies@cs50.net">selfies@cs50.net</a> by <strong>noon on Mon 10/19</strong>! We&#8217;ll add your photos to a public gallery (unless you request otherwise).</p>
-</div>
-<div class="paragraph">
-<p>For each (hey, that&#8217;s a loop) of the computer scientists you find, we&#8217;ll set you up with 1GB of Dropbox space! In other words, if you snag <em>n</em> selfies, we&#8217;ll send you <em>n</em> GB of Dropbox space (thanks to a former head TF who&#8217;s now at Dropbox)! (Though supplies may be limited.)</p>
-</div>
-<div class="paragraph">
-<p>Moreover, whoever finds and photographs the most computer scientists (and, in the event of a tie, submits first) shall be rewarded with a little something extra.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
