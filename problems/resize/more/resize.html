@@ -498,6 +498,11 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div class="listingblock">
 <div class="content">
+<pre class="pygments highlight"><code>$ <span class="underline">./resize .25 large.bmp small.bmp</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
 <pre class="pygments highlight"><code>$ <span class="underline">./resize 4 small.bmp large.bmp</span></code></pre>
 </div>
 </div>
@@ -534,7 +539,7 @@ bmp.h  copy.c  large.bmp  small.bmp  smiley.bmp</code></pre>
 <h2 id="specification"><a class="link" href="#specification">Specification</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program called <code>resize</code> that resizes (i.e., enlarges) 24-bit uncompressed BMPs by a factor of <code>n</code>.</p>
+<p>Implement a program called <code>resize</code> that resizes (i.e., enlarges or shrinks) 24-bit uncompressed BMPs by a factor of <code>f</code>.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -548,7 +553,7 @@ bmp.h  copy.c  large.bmp  small.bmp  smiley.bmp</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>the first (<code>n</code>) must be a positive integer less than or equal to <code>100</code>,</p>
+<p>the first (<code>f</code>) must be a floating-point value in (0.0, 100.0],</p>
 </li>
 <li>
 <p>the second must be the name of a BMP to be resized, and</p>
@@ -576,7 +581,7 @@ bmp.h  copy.c  large.bmp  small.bmp  smiley.bmp</code></pre>
 <div class="sectionbody">
 <div class="videoblock">
 <div class="content">
-<iframe src="https://www.youtube.com/embed/e7WtAQDk904?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/P0S-pgzvLZk?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
 </div>
@@ -593,6 +598,13 @@ bmp.h  copy.c  large.bmp  small.bmp  smiley.bmp</code></pre>
 Usage: ./resize n infile outfile
 $ echo $?
 1</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ <span class="underline">./resize .5 large.bmp smaller.bmp</span>
+$ echo $?
+0</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -616,7 +628,7 @@ $ echo $?
 </div>
 </div>
 <div class="paragraph">
-<p>You&#8217;re welcome to get started by copying (yet again) <code>copy.c</code> and naming the copy <code>resize.c</code>. But spend some time thinking about what it means to resize a BMP. (You may assume that <code>n</code> times the size of <code>infile</code> will not exceed 2<sup>32</sup> - 1.) Decide which of the fields in <code>BITMAPFILEHEADER</code> and <code>BITMAPINFOHEADER</code> you might need to modify. Consider whether or not you&#8217;ll need to add or subtract padding to scanlines. And do be sure to support a value of <code>1</code> for <code>n</code>, the result of which should be an <code>outfile</code> with dimensions identical to <code>infile</code>'s.</p>
+<p>You&#8217;re welcome to get started by copying (yet again) <code>copy.c</code> and naming the copy <code>resize.c</code>. But spend some time thinking about what it means to resize a BMP, particularly if <code>f</code> is in (0.0, 1.0). (You may assume that <code>n</code> times the size of <code>infile</code> will not exceed 2<sup>32</sup> - 1. As for a value of <code>1.0</code> for <code>f</code>, the result should indeed be an <code>outfile</code> with dimensions identical to <code>infile</code>'s.) How you handle  floating-point imprecision and rounding is entirely up to you, as is how you handle inevitable loss of detail. Decide which of the fields in <code>BITMAPFILEHEADER</code> and <code>BITMAPINFOHEADER</code> you might need to modify. Consider whether or not you&#8217;ll need to add or subtract padding to scanlines. And do be sure to support a value of <code>1</code> for <code>n</code>, the result of which should be an <code>outfile</code> with dimensions identical to <code>infile</code>'s.</p>
 </div>
 <div class="paragraph">
 <p>If you happen to use <code>malloc</code>, be sure to use <code>free</code> so as not to leak memory. Try using <code>valgrind</code> to check for any leaks!</p>
@@ -631,7 +643,7 @@ $ echo $?
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>~cs50/pset4/peek large.bmp</code></pre>
+<pre class="pygments highlight"><code>~cs50/hacker4/peek large.bmp</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -640,15 +652,15 @@ $ echo $?
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code>./resize 4 small.bmp student.bmp
-~cs50/pset4/resize 4 small.bmp staff.bmp
-~cs50/pset4/peek student.bmp staff.bmp</code></pre>
+~cs50/hacker4/resize 4 small.bmp staff.bmp
+~cs50/hacker4/peek student.bmp staff.bmp</code></pre>
 </div>
 </div>
 <div class="sect2">
 <h3 id="code-check50-code"><a class="link" href="#code-check50-code"><code>check50</code></a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>check50 2016.resize.less bmp.h resize.c</code></pre>
+<pre class="pygments highlight"><code>check50 2016.resize.more bmp.h resize.c</code></pre>
 </div>
 </div>
 </div>
@@ -659,7 +671,7 @@ $ echo $?
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>~cs50/pset4/resize</code></pre>
+<pre class="pygments highlight"><code>~cs50/hacker4/resize</code></pre>
 </div>
 </div>
 </div>
