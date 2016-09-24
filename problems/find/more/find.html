@@ -534,7 +534,7 @@ Makefile    find.c      generate.c  helpers.c   helpers.h</code></pre>
 <div class="sect2">
 <h3 id="understanding"><a class="link" href="#understanding">Understanding</a></h3>
 <div class="paragraph">
-<p>Implemented in <code>generate.c</code> is a program that uses a "pseudorandom-number generator" (via a function called <code>drand48</code>) to generate a whole bunch of random (well, pseudorandom, since computers can&#8217;t actually generate truly random) numbers, one per line, each of which is in [0.0, 1.0), so to speak. That is, each is greater than or equal to 0 and less than 1.0.</p>
+<p>Implemented in <code>generate.c</code> is a program that uses a "pseudorandom-number generator" (via a function called <code>drand48</code>) to generate a whole bunch of random (well, pseudorandom, since computers can&#8217;t actually generate truly random) numbers, one per line, each of which is in [0, <code>LIMIT</code>), where <code>LIMIT</code> is a constant defined within the file, so to speak. That is, each is greater than or equal to 0 and less than <code>LIMIT</code>.</p>
 </div>
 <div class="paragraph">
 <p>Go ahead and compile this program by executing the command below.</p>
