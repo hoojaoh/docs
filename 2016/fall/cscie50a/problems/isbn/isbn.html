@@ -670,10 +670,10 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <p>So, computing this check digit&#8217;s not hard, but it does get a bit tedious by hand. Let&#8217;s write a program.</p>
 </div>
 <div class="paragraph">
-<p>Create a file called <code>isbn.c</code> inside of your <code>~/workspace/chapter1</code> directory, in which you should write a program that prompts the user for an ISBN-10 and then reports (via <code>printf</code>) whether the number&#8217;s legit. So that we can automate some tests of your code, we ask that your program&#8217;s last line of output be either <code>YES\n</code> or <code>NO\n</code>, nothing more, nothing less.</p>
+<p>In <code>isbn.c</code>, write a program that prompts the user for an ISBN-10 and then reports (via <code>printf</code>) whether the number&#8217;s legit. So that we can automate some tests of your code, we ask that your program&#8217;s last line of output be either <code>YES\n</code> or <code>NO\n</code>, nothing more, nothing less.</p>
 </div>
 <div class="paragraph">
-<p>For simplicity, you may assume that the user&#8217;s input will be exactly ten decimal digits (i.e., devoid of hyphens and <code>X</code>), the first of which might even be zero(es), as in the case of our recommended book. But do not assume that the user&#8217;s input will fit in an <code>int</code>! Recall, after all, that the largest value that can fit in an <code>int</code> is 2<sup>32</sup> - 1 = 4,294,967,295 (and, even then, only if declared as <code>unsigned</code>). True, that&#8217;s a 10-digit value, but there might still be a problem. (What?) Best to be safe and use <code>GetLongLong</code> from CS50&#8217;s library to get users' input. (Why?)</p>
+<p>For simplicity, you may assume that the user&#8217;s input will be exactly ten decimal digits (i.e., devoid of hyphens and <code>X</code>), the first of which might even be zero(es), as in the case of our recommended book. But do not assume that the user&#8217;s input will fit in an <code>int</code>! Recall, after all, that the largest value that can fit in an <code>int</code> is 2<sup>32</sup> - 1 = 4,294,967,295 (and, even then, only if declared as <code>unsigned</code>). True, that&#8217;s a 10-digit value, but there might still be a problem. (What?) Best to be safe and use <code>get_long_long</code> from CS50&#8217;s library to get users' input. (Why?)</p>
 </div>
 <div class="paragraph">
 <p>Okay, so you&#8217;ve gotten some input. What should you do? Well, realize that this C program, not unlike Scratch projects, can be reduced to the most basic of building blocks. For the sake of discussion, suppose that some variable <code>x</code> contains a 10-digit <code>long long</code> (with no leading zeroes). How can you get at its tenth (i.e., rightmost) digit? Well how about this?</p>
@@ -743,7 +743,7 @@ YES</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Of course, <code>GetLongLong</code> itself will reject an ISBN-10&#8217;s hyphens (and more) anyway:</p>
+<p>Of course, <code>get_long_long</code> itself will reject an ISBN-10&#8217;s hyphens (and more) anyway:</p>
 </div>
 <div class="listingblock">
 <div class="content">
