@@ -566,7 +566,7 @@ bmp.h  copy.c  large.bmp  small.bmp  smiley.bmp</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>+ If your program is not executed with such, it should remind the user of correct usage, as with <code>fprintf</code>, and <code>main</code> should return <code>1</code>.</p>
+<p>+ If your program is not executed with such, it should remind the user of correct usage, as with <code>fprintf</code> (to <code>stderr</code>), and <code>main</code> should return <code>1</code>.</p>
 </div>
 </li>
 <li>
@@ -596,21 +596,21 @@ bmp.h  copy.c  large.bmp  small.bmp  smiley.bmp</code></pre>
 <div class="content">
 <pre class="pygments highlight"><code>$ <span class="underline">./resize</span>
 Usage: ./resize n infile outfile
-$ echo $?
+$ <span class="underline">echo $?</span>
 1</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code>$ <span class="underline">./resize .5 large.bmp smaller.bmp</span>
-$ echo $?
+$ <span class="underline">echo $?</span>
 0</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code>$ <span class="underline">./resize 2 small.bmp larger.bmp</span>
-$ echo $?
+$ <span class="underline">echo $?</span>
 0</code></pre>
 </div>
 </div>
@@ -689,6 +689,16 @@ $ echo $?
 <div class="sectionbody">
 <div class="ulist">
 <ul>
+<li>
+<p>2016-09-27</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Added a clarification regarding which file pointer to use for <code>fprintf</code>.</p>
+</li>
+</ul>
+</div>
+</li>
 <li>
 <p>2016-09-23</p>
 <div class="ulist">
